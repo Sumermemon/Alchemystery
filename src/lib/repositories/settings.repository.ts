@@ -4,13 +4,14 @@
  */
 
 import { createClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/lib/supabase/public';
 import type { SiteSettingRow } from '@/types/database.types';
 import { buildSiteSettings } from '@/types/content.types';
 import type { SiteSettings } from '@/types/content.types';
 
 /** Fetch all site settings and return as a typed map */
 export async function getSiteSettings(): Promise<Partial<SiteSettings>> {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from('site_settings')
     .select('*')

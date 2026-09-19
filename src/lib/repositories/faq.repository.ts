@@ -3,11 +3,12 @@
  */
 
 import { createClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/lib/supabase/public';
 import { STATUS } from '@/constants/status';
 import type { FaqRow, InsertFaq, UpdateFaq } from '@/types/database.types';
 
 export async function getPublishedFaqs(): Promise<FaqRow[]> {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from('faqs')
     .select('*')

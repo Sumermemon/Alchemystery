@@ -3,12 +3,13 @@
  */
 
 import { createClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/lib/supabase/public';
 import { STATUS } from '@/constants/status';
 import type { BlogPostRow, InsertBlogPost, UpdateBlogPost } from '@/types/database.types';
 
 /** Fetch all published blog posts, newest first */
 export async function getPublishedBlogPosts(limit?: number): Promise<BlogPostRow[]> {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   let query = supabase
     .from('blog_posts')
     .select('*')
@@ -24,7 +25,7 @@ export async function getPublishedBlogPosts(limit?: number): Promise<BlogPostRow
 
 /** Fetch a single published post by slug */
 export async function getPublishedBlogPostBySlug(slug: string): Promise<BlogPostRow | null> {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from('blog_posts')
     .select('*')

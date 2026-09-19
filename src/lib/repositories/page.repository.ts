@@ -3,13 +3,14 @@
  */
 
 import { createClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/lib/supabase/public';
 import { STATUS } from '@/constants/status';
 import type { PageRow, PageSectionRow, InsertPage, UpdatePage, InsertPageSection, UpdatePageSection } from '@/types/database.types';
 import type { PageWithSections } from '@/types/content.types';
 
 /** Fetch a published page with all its published sections, by slug */
 export async function getPublishedPageBySlug(slug: string): Promise<PageWithSections | null> {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
 
   const { data: page, error: pageError } = await supabase
     .from('pages')

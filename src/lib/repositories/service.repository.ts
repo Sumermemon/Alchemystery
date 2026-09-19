@@ -5,12 +5,13 @@
  */
 
 import { createClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/lib/supabase/public';
 import { STATUS } from '@/constants/status';
 import type { ServiceRow, InsertService, UpdateService } from '@/types/database.types';
 
 /** Fetch all published services, ordered by sort_order */
 export async function getPublishedServices(): Promise<ServiceRow[]> {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from('services')
     .select('*')
@@ -23,7 +24,7 @@ export async function getPublishedServices(): Promise<ServiceRow[]> {
 
 /** Fetch a single published service by slug — used for /sessions/[slug] */
 export async function getPublishedServiceBySlug(slug: string): Promise<ServiceRow | null> {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data, error } = await supabase
     .from('services')
     .select('*')
