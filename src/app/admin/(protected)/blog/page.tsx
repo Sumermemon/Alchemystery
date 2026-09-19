@@ -27,7 +27,7 @@ export default async function AdminBlogPage() {
           <h1 className="text-xl text-[var(--color-ivory)]" style={{ fontFamily: 'var(--font-serif)' }}>Blog Posts</h1>
           <p className="text-[var(--color-muted)] text-sm mt-1">Manage articles and journal entries</p>
         </div>
-        <Button asChild>
+        <Button>
           <Link href="/admin/blog/new" id="new-post-btn">
             <PenTool className="w-4 h-4 mr-2" />
             New Post
@@ -75,7 +75,7 @@ export default async function AdminBlogPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button asChild variant="ghost" size="sm">
+                      <Button variant="ghost" size="sm">
                         <Link href={`/admin/blog/${post.id}`}>
                           <Edit className="w-4 h-4" />
                           <span className="sr-only">Edit</span>

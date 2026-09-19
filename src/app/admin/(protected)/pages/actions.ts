@@ -15,7 +15,7 @@ export async function createPageAction(data: PageFormData) {
     throw new Error('Invalid form data');
   }
 
-  await createPage(parsed.data);
+  await createPage({ ...parsed.data, seo_title: parsed.data.seo_title ?? null, seo_description: parsed.data.seo_description ?? null, og_image_url: parsed.data.og_image_url ?? null });
   revalidatePath('/admin/pages');
   revalidatePath('/' + parsed.data.slug);
   redirect('/admin/pages');
@@ -30,7 +30,7 @@ export async function updatePageAction(id: string, data: PageFormData) {
     throw new Error('Invalid form data');
   }
 
-  await updatePage({ id, ...parsed.data });
+  await updatePage({ id, ...parsed.data, seo_title: parsed.data.seo_title ?? null, seo_description: parsed.data.seo_description ?? null, og_image_url: parsed.data.og_image_url ?? null });
   revalidatePath('/admin/pages');
   revalidatePath('/' + parsed.data.slug);
   redirect('/admin/pages');

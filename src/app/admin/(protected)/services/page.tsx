@@ -26,7 +26,7 @@ export default async function AdminServicesPage() {
           <h1 className="text-xl text-[var(--color-ivory)]" style={{ fontFamily: 'var(--font-serif)' }}>Services</h1>
           <p className="text-[var(--color-muted)] text-sm mt-1">Manage sessions & offerings</p>
         </div>
-        <Button asChild>
+        <Button>
           <Link href="/admin/services/new" id="new-service-btn">
             <Sparkles className="w-4 h-4 mr-2" />
             New Service
@@ -72,7 +72,7 @@ export default async function AdminServicesPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button asChild variant="ghost" size="sm">
+                      <Button variant="ghost" size="sm">
                         <Link href={`/admin/services/${service.id}`}>
                           <Edit className="w-4 h-4" />
                           <span className="sr-only">Edit</span>

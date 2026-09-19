@@ -26,7 +26,7 @@ export default async function AdminFaqsPage() {
           <h1 className="text-xl text-[var(--color-ivory)]" style={{ fontFamily: 'var(--font-serif)' }}>FAQs</h1>
           <p className="text-[var(--color-muted)] text-sm mt-1">Manage frequently asked questions</p>
         </div>
-        <Button asChild>
+        <Button>
           <Link href="/admin/faqs/new">
             <Plus className="w-4 h-4 mr-2" />
             New FAQ
@@ -69,7 +69,7 @@ export default async function AdminFaqsPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button asChild variant="ghost" size="sm">
+                      <Button variant="ghost" size="sm">
                         <Link href={`/admin/faqs/${faq.id}`}>
                           <Edit className="w-4 h-4" />
                           <span className="sr-only">Edit</span>

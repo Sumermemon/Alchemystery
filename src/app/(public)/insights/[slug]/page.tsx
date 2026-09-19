@@ -56,11 +56,6 @@ export default async function InsightDetailPage({ params }: Props) {
   return (
     <article className="max-w-4xl mx-auto px-6 py-24">
       <header className="mb-16 text-center space-y-6">
-        {post.category && (
-          <p className="text-[var(--color-gold)] text-xs tracking-[0.2em] uppercase">
-            {post.category}
-          </p>
-        )}
         <h1 className="text-4xl md:text-5xl" style={{ fontFamily: 'var(--font-serif)' }}>
           {post.title}
         </h1>

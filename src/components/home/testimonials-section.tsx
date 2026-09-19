@@ -32,10 +32,10 @@ export function TestimonialsSection({ testimonials }: { testimonials: Testimonia
             </button>
             
             <p className="text-xl md:text-2xl leading-relaxed italic mb-8 px-6 text-[var(--color-ivory)]" style={{ fontFamily: 'var(--font-serif)' }}>
-              "{testimonial.quote}"
+              "{testimonial.content}"
             </p>
             <p className="text-[var(--color-slate-muted)] text-sm tracking-widest uppercase font-semibold">
-              — {testimonial.client_name}
+              — {testimonial.author_name}
             </p>
 
             <button className="absolute right-[-2rem] top-1/2 -translate-y-1/2 text-[var(--color-slate-muted)] hover:text-[var(--color-gold)] transition-colors">

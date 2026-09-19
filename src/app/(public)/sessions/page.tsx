@@ -45,11 +45,6 @@ export default async function SessionsPage() {
               </div>
             )}
             <div className="p-8">
-              {service.category && (
-                <p className="text-[var(--color-gold)] text-xs tracking-[0.2em] uppercase mb-4">
-                  {service.category}
-                </p>
-              )}
               <h2 className="text-2xl mb-4 group-hover:text-[var(--color-ivory)] transition-colors" style={{ fontFamily: 'var(--font-serif)' }}>
                 {service.title}
               </h2>

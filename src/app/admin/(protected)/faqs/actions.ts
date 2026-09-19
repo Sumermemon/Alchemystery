@@ -18,7 +18,7 @@ export async function createFaqAction(data: FaqFormData) {
     throw new Error('Invalid form data');
   }
 
-  await createFaq(parsed.data);
+  await createFaq({ ...parsed.data, category: parsed.data.category ?? null });
   revalidatePath('/admin/faqs');
   revalidatePath('/faqs');
   redirect('/admin/faqs');
@@ -33,7 +33,7 @@ export async function updateFaqAction(id: string, data: FaqFormData) {
     throw new Error('Invalid form data');
   }
 
-  await updateFaq({ id, ...parsed.data });
+  await updateFaq({ id, ...parsed.data, category: parsed.data.category ?? null });
   revalidatePath('/admin/faqs');
   revalidatePath('/faqs');
   redirect('/admin/faqs');

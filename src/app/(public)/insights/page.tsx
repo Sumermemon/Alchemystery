@@ -45,11 +45,6 @@ export default async function InsightsPage() {
               </div>
             )}
             <div className="p-8">
-              {post.category && (
-                <p className="text-[var(--color-gold)] text-xs tracking-[0.2em] uppercase mb-4">
-                  {post.category}
-                </p>
-              )}
               <h2 className="text-2xl mb-4 group-hover:text-[var(--color-ivory)] transition-colors" style={{ fontFamily: 'var(--font-serif)' }}>
                 {post.title}
               </h2>

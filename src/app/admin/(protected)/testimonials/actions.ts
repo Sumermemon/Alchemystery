@@ -15,7 +15,7 @@ export async function createTestimonialAction(data: TestimonialFormData) {
     throw new Error('Invalid form data: ' + parsed.error.issues.map(e => e.message).join(', '));
   }
 
-  await createTestimonial(parsed.data);
+  await createTestimonial({ ...parsed.data, author_initials: parsed.data.author_initials ?? null, service_id: parsed.data.service_id ?? null });
   revalidatePath('/admin/testimonials');
   revalidatePath('/');
   redirect('/admin/testimonials');
@@ -30,7 +30,7 @@ export async function updateTestimonialAction(id: string, data: TestimonialFormD
     throw new Error('Invalid form data: ' + parsed.error.issues.map(e => e.message).join(', '));
   }
 
-  await updateTestimonial({ id, ...parsed.data });
+  await updateTestimonial({ id, ...parsed.data, author_initials: parsed.data.author_initials ?? null, service_id: parsed.data.service_id ?? null });
   revalidatePath('/admin/testimonials');
   revalidatePath('/');
   redirect('/admin/testimonials');

@@ -26,7 +26,7 @@ export default async function AdminPagesPage() {
           <h1 className="text-xl text-[var(--color-ivory)]" style={{ fontFamily: 'var(--font-serif)' }}>Pages</h1>
           <p className="text-[var(--color-muted)] text-sm mt-1">Manage content for custom pages</p>
         </div>
-        <Button asChild>
+        <Button>
           <Link href="/admin/pages/new">
             <Plus className="w-4 h-4 mr-2" />
             New Page
@@ -69,7 +69,7 @@ export default async function AdminPagesPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button asChild variant="ghost" size="sm">
+                      <Button variant="ghost" size="sm">
                         <Link href={`/admin/pages/${page.id}`}>
                           <Edit className="w-4 h-4" />
                           <span className="sr-only">Edit</span>

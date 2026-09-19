@@ -56,11 +56,6 @@ export default async function SessionDetailPage({ params }: Props) {
   return (
     <article className="max-w-4xl mx-auto px-6 py-24">
       <header className="text-center mb-16 space-y-6">
-        {service.category && (
-          <p className="text-[var(--color-gold)] text-xs tracking-[0.2em] uppercase">
-            {service.category}
-          </p>
-        )}
         <h1 className="text-4xl md:text-5xl" style={{ fontFamily: 'var(--font-serif)' }}>
           {service.title}
         </h1>
@@ -81,9 +76,9 @@ export default async function SessionDetailPage({ params }: Props) {
         </div>
       )}
 
-      {service.long_description && (
+      {service.description && (
         <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.04)] rounded-2xl p-8 md:p-12">
-          <MarkdownRenderer content={service.long_description} />
+          <MarkdownRenderer content={service.description} />
         </div>
       )}
       

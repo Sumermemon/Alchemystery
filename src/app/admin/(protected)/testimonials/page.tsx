@@ -26,7 +26,7 @@ export default async function AdminTestimonialsPage() {
           <h1 className="text-xl text-[var(--color-ivory)]" style={{ fontFamily: 'var(--font-serif)' }}>Testimonials</h1>
           <p className="text-[var(--color-muted)] text-sm mt-1">Manage client reflections</p>
         </div>
-        <Button asChild>
+        <Button>
           <Link href="/admin/testimonials/new">
             <Plus className="w-4 h-4 mr-2" />
             New Testimonial
@@ -69,7 +69,7 @@ export default async function AdminTestimonialsPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button asChild variant="ghost" size="sm">
+                      <Button variant="ghost" size="sm">
                         <Link href={`/admin/testimonials/${testimonial.id}`}>
                           <Edit className="w-4 h-4" />
                           <span className="sr-only">Edit</span>
