@@ -3,12 +3,31 @@ import Link from 'next/link';
 import { getPublishedServices } from '@/lib/repositories/service.repository';
 import { getSiteSettings } from '@/lib/repositories/settings.repository';
 
+import { siteConfig } from '@/config/site';
+
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
-  const brandName = settings.brand_name || 'Alchemystery';
+  const brandName = settings.brand_name || siteConfig.name;
+  const baseUrl = siteConfig.url.replace(/\/$/, '');
+
   return {
-    title: `The Practice | ${brandName}`,
-    description: 'Explore the spiritual modalities offered at Alchemystery — Akashic Records, Tarot, Numerology, Energy Healing and more.',
+    title: 'The Practice',
+    description: 'Explore the spiritual modalities offered at Alchemystery — Akashic Records, Tarot, Numerology, Energy Healing and spiritual guidance.',
+    alternates: {
+      canonical: `${baseUrl}/practice`,
+    },
+    openGraph: {
+      title: `The Practice · Sacred Modalities | ${brandName}`,
+      description: 'Explore the spiritual modalities offered at Alchemystery — Akashic Records, Tarot, Numerology, Energy Healing and spiritual guidance.',
+      url: `${baseUrl}/practice`,
+      siteName: brandName,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `The Practice | ${brandName}`,
+      description: 'Sacred modalities for intuitive exploration and spiritual self-discovery.',
+    },
   };
 }
 

@@ -3,20 +3,29 @@
  */
 
 import { createClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/lib/supabase/public';
 import type { NavigationItemRow, InsertNavigationItem } from '@/types/database.types';
 
 type NavLocation = 'header' | 'footer';
 
 export async function getNavigationItems(location: NavLocation): Promise<NavigationItemRow[]> {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from('navigation_items')
-    .select('*')
-    .eq('location', location)
-    .order('sort_order', { ascending: true });
+  try {
+    const supabase = createPublicClient();
+    const { data, error } = await supabase
+      .from('navigation_items')
+      .select('*')
+      .eq('location', location)
+      .order('sort_order', { ascending: true });
 
-  if (error) throw new Error(`[NavigationRepository] getNavigationItems: ${error.message}`);
-  return data ?? [];
+    if (error) {
+      console.warn(`[NavigationRepository] getNavigationItems(${location}) warning:`, error.message);
+      return [];
+    }
+    return data ?? [];
+  } catch (err) {
+    console.warn(`[NavigationRepository] getNavigationItems(${location}) exception:`, err);
+    return [];
+  }
 }
 
 export async function getAllNavigationItems(): Promise<NavigationItemRow[]> {

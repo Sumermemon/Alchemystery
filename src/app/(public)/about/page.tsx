@@ -2,12 +2,31 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getSiteSettings } from '@/lib/repositories/settings.repository';
 
+import { siteConfig } from '@/config/site';
+
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
-  const brandName = settings.brand_name || 'Alchemystery';
+  const brandName = settings.brand_name || siteConfig.name;
+  const baseUrl = siteConfig.url.replace(/\/$/, '');
+
   return {
-    title: `About Isha | ${brandName}`,
-    description: 'Meet Isha — an intuitive guide offering one-to-one sessions in Akashic Records, Tarot, Numerology and Spiritual Guidance.',
+    title: 'About Isha',
+    description: 'Meet Isha — intuitive guide and practitioner at Alchemystery offering one-to-one sessions in Akashic Records, Tarot, Numerology and Spiritual Guidance.',
+    alternates: {
+      canonical: `${baseUrl}/about`,
+    },
+    openGraph: {
+      title: `About Isha | ${brandName}`,
+      description: 'Meet Isha — intuitive guide offering one-to-one sessions in Akashic Records, Tarot, Numerology and Spiritual Guidance.',
+      url: `${baseUrl}/about`,
+      siteName: brandName,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `About Isha | ${brandName}`,
+      description: 'Meet Isha — intuitive guide and practitioner at Alchemystery.',
+    },
   };
 }
 

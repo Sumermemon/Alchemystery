@@ -12,14 +12,34 @@ export default async function PublicLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [settings, headerLinks, footerLinks] = await Promise.all([
+  const [settings, headerLinksRaw, footerLinksRaw] = await Promise.all([
     getSiteSettings(),
     getNavigationItems('header'),
     getNavigationItems('footer'),
   ]);
 
+  const defaultHeaderLinks = [
+    { id: 'nav-practice', label: 'The Practice', href: '/practice', is_external: false, location: 'header' as const, sort_order: 1, created_at: '', updated_at: '' },
+    { id: 'nav-sessions', label: 'Sessions', href: '/sessions', is_external: false, location: 'header' as const, sort_order: 2, created_at: '', updated_at: '' },
+    { id: 'nav-about', label: 'About Isha', href: '/about', is_external: false, location: 'header' as const, sort_order: 3, created_at: '', updated_at: '' },
+    { id: 'nav-insights', label: 'Insights', href: '/insights', is_external: false, location: 'header' as const, sort_order: 4, created_at: '', updated_at: '' },
+    { id: 'nav-connect', label: 'Connect', href: '/connect', is_external: false, location: 'header' as const, sort_order: 5, created_at: '', updated_at: '' },
+  ];
+
+  const defaultFooterLinks = [
+    { id: 'foot-practice', label: 'The Practice', href: '/practice', is_external: false, location: 'footer' as const, sort_order: 1, created_at: '', updated_at: '' },
+    { id: 'foot-sessions', label: 'Sessions', href: '/sessions', is_external: false, location: 'footer' as const, sort_order: 2, created_at: '', updated_at: '' },
+    { id: 'foot-about', label: 'About', href: '/about', is_external: false, location: 'footer' as const, sort_order: 3, created_at: '', updated_at: '' },
+    { id: 'foot-insights', label: 'Insights', href: '/insights', is_external: false, location: 'footer' as const, sort_order: 4, created_at: '', updated_at: '' },
+    { id: 'foot-faq', label: 'FAQ', href: '/faq', is_external: false, location: 'footer' as const, sort_order: 5, created_at: '', updated_at: '' },
+    { id: 'foot-connect', label: 'Connect', href: '/connect', is_external: false, location: 'footer' as const, sort_order: 6, created_at: '', updated_at: '' },
+  ];
+
+  const headerLinks = headerLinksRaw.length > 0 ? headerLinksRaw : defaultHeaderLinks;
+  const footerLinks = footerLinksRaw.length > 0 ? footerLinksRaw : defaultFooterLinks;
+
   const brandName = settings.brand_name || 'Alchemystery';
-  const footerText = settings.footer_text || `© ${new Date().getFullYear()} ${brandName}`;
+  const footerText = settings.footer_text || `© ${new Date().getFullYear()} ${brandName} · All Sacred Rights Reserved`;
 
   return (
     <>

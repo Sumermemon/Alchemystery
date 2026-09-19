@@ -7,6 +7,7 @@ export type EnquiryPayload = {
   email: string;
   session_type?: string;
   message: string;
+  honeypot?: string;
 };
 
 export type EnquiryResult = {
@@ -14,19 +15,45 @@ export type EnquiryResult = {
   error?: string;
 };
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export async function submitEnquiry(payload: EnquiryPayload): Promise<EnquiryResult> {
+  // Anti-bot honeypot check: Bots fill this hidden input
+  if (payload.honeypot && payload.honeypot.trim().length > 0) {
+    // Silently return success to bot without saving
+    return { success: true };
+  }
+
+  const name = (payload.name || '').trim();
+  const email = (payload.email || '').trim().toLowerCase();
+  const message = (payload.message || '').trim();
+  const sessionType = (payload.session_type || '').trim() || null;
+
+  // Validation
+  if (name.length < 2) {
+    return { success: false, error: 'Please provide your name.' };
+  }
+
+  if (!email || !EMAIL_REGEX.test(email)) {
+    return { success: false, error: 'Please provide a valid email address.' };
+  }
+
+  if (message.length < 5) {
+    return { success: false, error: 'Please write a brief message (at least 5 characters).' };
+  }
+
   try {
     const supabase = await createClient();
     const { error } = await supabase.from('enquiries').insert({
-      name: payload.name.trim(),
-      email: payload.email.trim().toLowerCase(),
-      session_type: payload.session_type || null,
-      message: payload.message.trim(),
+      name,
+      email,
+      session_type: sessionType,
+      message,
     });
 
     if (error) {
       console.error('[EnquiryAction] insert error:', error.message);
-      // If table doesn't exist yet, still show success to user
+      // If table doesn't exist yet, still show success to user so front-end does not break
       if (error.code === 'PGRST205' || error.code === '42P01') {
         return { success: true };
       }

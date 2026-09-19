@@ -27,10 +27,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ]);
     if (!service) return { title: 'Session Not Found' };
     const brandName = settings.brand_name || 'Alchemystery';
+    const baseUrl = (process.env.NEXT_PUBLIC_APP_URL || 'https://alchemystery.in').replace(/\/$/, '');
     return {
       title: `${service.seo_title ?? service.title} | ${brandName}`,
       description: service.seo_description ?? service.short_description ?? undefined,
-      openGraph: service.image_url ? { images: [service.image_url] } : undefined,
+      alternates: {
+        canonical: `${baseUrl}/sessions/${service.slug}`,
+      },
+      openGraph: {
+        title: `${service.seo_title ?? service.title} | ${brandName}`,
+        description: service.seo_description ?? service.short_description ?? undefined,
+        url: `${baseUrl}/sessions/${service.slug}`,
+        images: service.image_url ? [service.image_url] : undefined,
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${service.title} | ${brandName}`,
+        description: service.short_description ?? undefined,
+      },
     };
   } catch {
     return { title: 'Session' };

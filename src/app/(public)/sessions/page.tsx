@@ -3,12 +3,31 @@ import Link from 'next/link';
 import { getPublishedServices } from '@/lib/repositories/service.repository';
 import { getSiteSettings } from '@/lib/repositories/settings.repository';
 
+import { siteConfig } from '@/config/site';
+
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
-  const brandName = settings.brand_name || 'Alchemystery';
+  const brandName = settings.brand_name || siteConfig.name;
+  const baseUrl = siteConfig.url.replace(/\/$/, '');
+
   return {
-    title: `Sessions | ${brandName}`,
-    description: 'Explore sessions offered by Alchemystery — Akashic Records, Tarot, Numerology, Spiritual Guidance, and Energy Healing.',
+    title: 'Offerings & Sessions',
+    description: 'Explore transformative one-to-one sessions offered by Alchemystery — Akashic Records, Tarot, Numerology, Spiritual Guidance, and Energy Healing.',
+    alternates: {
+      canonical: `${baseUrl}/sessions`,
+    },
+    openGraph: {
+      title: `Offerings & Sessions | ${brandName}`,
+      description: 'Explore transformative one-to-one sessions offered by Alchemystery — Akashic Records, Tarot, Numerology, Spiritual Guidance, and Energy Healing.',
+      url: `${baseUrl}/sessions`,
+      siteName: brandName,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Offerings & Sessions | ${brandName}`,
+      description: 'Transformative intuitive and spiritual guidance sessions with Isha.',
+    },
   };
 }
 
