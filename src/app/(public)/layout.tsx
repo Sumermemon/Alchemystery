@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getSiteSettings } from '@/lib/repositories/settings.repository';
 import { getNavigationItems } from '@/lib/repositories/navigation.repository';
+import { MobileNav } from '@/components/ui/mobile-nav';
 
 /**
  * Public website layout.
@@ -35,6 +36,8 @@ export default async function PublicLayout({
           >
             {brandName}
           </Link>
+
+          {/* Desktop Nav */}
           <nav aria-label="Main navigation" className="hidden md:flex items-center gap-8">
             {headerLinks.map((item) => (
               <Link 
@@ -48,8 +51,12 @@ export default async function PublicLayout({
               </Link>
             ))}
           </nav>
+
+          {/* Mobile Nav */}
+          <MobileNav items={headerLinks} />
         </div>
       </header>
+
 
       <main role="main" className="pt-16">
         {children}
