@@ -154,6 +154,19 @@ export interface MediaAssetRow {
   updated_at: string;
 }
 
+export type EnquiryStatus = 'new' | 'read' | 'replied' | 'archived';
+
+export interface EnquiryRow {
+  id: string;
+  name: string;
+  email: string;
+  session_type: string | null;
+  message: string;
+  status: EnquiryStatus;
+  created_at: string;
+  updated_at: string;
+}
+
 // ---------------------------------------------------------------------------
 // Insert types — used when creating new rows (id, timestamps omitted)
 // ---------------------------------------------------------------------------
@@ -166,6 +179,7 @@ export type InsertPage = Omit<PageRow, 'id' | 'created_at' | 'updated_at'>;
 export type InsertPageSection = Omit<PageSectionRow, 'id' | 'created_at' | 'updated_at'>;
 export type InsertNavigationItem = Omit<NavigationItemRow, 'id' | 'created_at' | 'updated_at'>;
 export type InsertMediaAsset = Omit<MediaAssetRow, 'id' | 'created_at' | 'updated_at'>;
+export type InsertEnquiry = Omit<EnquiryRow, 'id' | 'created_at' | 'updated_at'>;
 
 // ---------------------------------------------------------------------------
 // Update types — all fields optional except id
@@ -177,3 +191,4 @@ export type UpdateFaq = Partial<InsertFaq> & { id: string };
 export type UpdateTestimonial = Partial<InsertTestimonial> & { id: string };
 export type UpdatePage = Partial<InsertPage> & { id: string };
 export type UpdatePageSection = Partial<InsertPageSection> & { id: string };
+export type UpdateEnquiry = Partial<InsertEnquiry> & { id: string };

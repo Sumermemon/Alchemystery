@@ -10,7 +10,8 @@ import {
   HelpCircle, 
   FileText, 
   Settings, 
-  LogOut 
+  LogOut,
+  Inbox
 } from 'lucide-react';
 import type { Role } from '@/constants/roles';
 import { signOutAction } from '@/app/admin/actions';
@@ -21,10 +22,12 @@ interface AdminSidebarProps {
     email: string | undefined;
     role: Role;
   };
+  unreadEnquiriesCount?: number;
 }
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/admin', exact: true, icon: LayoutDashboard },
+  { label: 'Enquiries', href: '/admin/enquiries', icon: Inbox, badge: 'enquiries' },
   { label: 'Services', href: '/admin/services', icon: Sparkles },
   { label: 'Blog Posts', href: '/admin/blog', icon: PenTool },
   { label: 'Testimonials', href: '/admin/testimonials', icon: MessageSquareQuote },
@@ -36,7 +39,7 @@ const NAV_ITEMS = [
 /**
  * Admin sidebar navigation.
  */
-export default function AdminSidebar({ user }: AdminSidebarProps) {
+export default function AdminSidebar({ user, unreadEnquiriesCount = 0 }: AdminSidebarProps) {
   const pathname = usePathname();
 
   function isActive(href: string, exact: boolean = false): boolean {
@@ -74,15 +77,28 @@ export default function AdminSidebar({ user }: AdminSidebarProps) {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="flex items-center gap-3 px-3 py-2 rounded text-sm transition-all duration-200"
+                  className="flex items-center justify-between px-3 py-2 rounded text-sm transition-all duration-200"
                   style={{
                     color: active ? 'var(--color-gold)' : 'var(--color-muted)',
                     backgroundColor: active ? 'rgba(201, 168, 76, 0.08)' : 'transparent',
                   }}
                   aria-current={active ? 'page' : undefined}
                 >
-                  <Icon size={16} className={active ? "opacity-100" : "opacity-60"} />
-                  {item.label}
+                  <div className="flex items-center gap-3">
+                    <Icon size={16} className={active ? "opacity-100" : "opacity-60"} />
+                    {item.label}
+                  </div>
+                  {'badge' in item && item.badge === 'enquiries' && unreadEnquiriesCount > 0 && (
+                    <span
+                      className="px-1.5 py-0.5 rounded-full text-[10px] font-bold leading-none"
+                      style={{
+                        backgroundColor: 'var(--color-gold)',
+                        color: '#000',
+                      }}
+                    >
+                      {unreadEnquiriesCount}
+                    </span>
+                  )}
                 </Link>
               </li>
             );

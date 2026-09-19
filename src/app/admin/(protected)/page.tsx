@@ -2,18 +2,30 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllServices } from '@/lib/repositories/service.repository';
 import { getAllBlogPosts } from '@/lib/repositories/blog.repository';
+import { getEnquiries } from '@/lib/repositories/enquiry.repository';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Sparkles, PenTool, MessageSquare, HelpCircle, FileText, Settings } from 'lucide-react';
+import { Sparkles, PenTool, MessageSquare, HelpCircle, FileText, Settings, Inbox } from 'lucide-react';
 
 export const metadata: Metadata = { title: 'Dashboard — Admin' };
 
 export default async function AdminDashboardPage() {
-  const [services, blogPosts] = await Promise.all([
+  const [services, blogPosts, enquiriesResult] = await Promise.all([
     getAllServices(),
     getAllBlogPosts(),
+    getEnquiries(),
   ]);
 
+  const newEnquiriesCount = enquiriesResult.enquiries.filter((e) => e.status === 'new').length;
+
   const cards = [
+    { 
+      label: 'Enquiries', 
+      route: '/admin/enquiries', 
+      description: newEnquiriesCount > 0 ? `${newEnquiriesCount} new unread submissions` : 'Client booking requests', 
+      icon: Inbox, 
+      count: enquiriesResult.enquiries.length,
+      badge: newEnquiriesCount > 0 ? `${newEnquiriesCount} new` : undefined,
+    },
     { label: 'Services', route: '/admin/services', description: 'Manage sessions & offerings', icon: Sparkles, count: services.length },
     { label: 'Blog Posts', route: '/admin/blog', description: 'Write & publish insights', icon: PenTool, count: blogPosts.length },
     { label: 'Testimonials', route: '/admin/testimonials', description: 'Client reflections', icon: MessageSquare, count: 0 },
@@ -43,9 +55,16 @@ export default async function AdminDashboardPage() {
             <Link key={item.route} href={item.route} className="block group">
               <Card className="h-full transition-colors group-hover:border-[rgba(201,168,76,0.3)]">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-[var(--color-ivory)]">
-                    {item.label}
-                  </CardTitle>
+                  <div className="flex items-center gap-2">
+                    <CardTitle className="text-sm font-medium text-[var(--color-ivory)]">
+                      {item.label}
+                    </CardTitle>
+                    {item.badge && (
+                      <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                        {item.badge}
+                      </span>
+                    )}
+                  </div>
                   <Icon className="h-4 w-4 text-[var(--color-muted)] group-hover:text-[var(--color-gold)] transition-colors" />
                 </CardHeader>
                 <CardContent>

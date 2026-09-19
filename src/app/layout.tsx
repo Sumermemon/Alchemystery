@@ -49,8 +49,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabaseOrigin = process.env.NEXT_PUBLIC_SUPABASE_URL
+    ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).origin
+    : null;
+
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {supabaseOrigin && <link rel="preconnect" href={supabaseOrigin} />}
+        {supabaseOrigin && <link rel="dns-prefetch" href={supabaseOrigin} />}
+      </head>
       <body className="antialiased">{children}</body>
     </html>
   );

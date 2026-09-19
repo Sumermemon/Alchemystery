@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { requireSuperAdmin } from '@/lib/services/auth.service';
+import { getUnreadEnquiriesCount } from '@/lib/repositories/enquiry.repository';
 import AdminSidebar from '@/components/admin/admin-sidebar';
 
 /**
@@ -66,13 +67,18 @@ WHERE id = (
     );
   }
 
+  const unreadEnquiries = await getUnreadEnquiriesCount();
+
   return (
     <div className="flex min-h-screen" style={{ backgroundColor: '#0d1022' }}>
-      <AdminSidebar user={{
-        displayName: authUser.profile.display_name,
-        email: authUser.supabaseUser.email,
-        role: authUser.profile.role,
-      }} />
+      <AdminSidebar 
+        user={{
+          displayName: authUser.profile.display_name,
+          email: authUser.supabaseUser.email,
+          role: authUser.profile.role,
+        }} 
+        unreadEnquiriesCount={unreadEnquiries}
+      />
 
       <div className="flex-1 flex flex-col min-w-0">
         <header

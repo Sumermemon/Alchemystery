@@ -39,14 +39,61 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [services, testimonials, posts] = await Promise.all([
+  const [services, testimonials, posts, settings] = await Promise.all([
     getPublishedServices(),
     getPublishedTestimonials(),
     getPublishedBlogPosts(),
+    getSiteSettings(),
   ]);
+
+  const brandName = settings.brand_name || siteConfig.name;
+  const baseUrl = siteConfig.url.replace(/\/$/, '');
+
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: brandName,
+    description: siteConfig.defaultMeta.description,
+    url: baseUrl,
+    founder: {
+      '@type': 'Person',
+      name: siteConfig.practitioner.name,
+      jobTitle: siteConfig.practitioner.title,
+    },
+    priceRange: '₹₹',
+    areaServed: 'IN',
+    knowsAbout: [
+      'Tarot Reading',
+      'Akashic Records',
+      'Spiritual Guidance',
+      'Inner Work',
+      'Energy Reading',
+    ],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Spiritual Practices & Sessions',
+      itemListElement: services.map((s, idx) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: s.title,
+          description: s.short_description || undefined,
+          url: `${baseUrl}/sessions/${s.slug}`,
+        },
+        position: idx + 1,
+      })),
+    },
+    sameAs: [
+      siteConfig.social.instagram,
+    ].filter(Boolean),
+  };
   
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <HeroSection />
       <PracticeSection />
       <SessionsSection services={services} />
