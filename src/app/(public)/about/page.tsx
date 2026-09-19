@@ -113,33 +113,23 @@ export default async function AboutPage() {
               </div>
             </div>
 
-            {/* Right — Portrait placeholder */}
+            {/* Right — Isha Portrait */}
             <div className="flex justify-center lg:justify-end">
               <div
-                className="relative w-72 h-96 rounded-2xl overflow-hidden"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(61,44,92,0.6) 0%, rgba(11,15,30,0.8) 100%)',
-                  border: '1px solid rgba(207,165,106,0.2)',
-                }}
+                className="relative w-80 sm:w-96 h-[460px] rounded-3xl overflow-hidden shadow-2xl border border-[#CFA56A]/30"
               >
-                {/* Decorative inner glow */}
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: 'radial-gradient(ellipse at 50% 30%, rgba(207,165,106,0.12) 0%, transparent 60%)',
-                  }}
+                <img 
+                  src="/images/isha_portrait.png" 
+                  alt="Isha Singasane — Intuitive Guide & Practitioner" 
+                  className="w-full h-full object-cover object-top"
                 />
-                {/* Decorative symbol */}
-                <div
-                  className="absolute inset-0 flex items-center justify-center text-8xl"
-                  style={{ color: 'rgba(207,165,106,0.15)', fontFamily: 'var(--font-serif)' }}
-                >
-                  ✦
-                </div>
-                {/* Subtle label */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F1E]/60 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-6 left-0 right-0 text-center">
-                  <span className="text-xs text-[rgba(207,165,106,0.4)] tracking-widest uppercase">
-                    Isha
+                  <p className="text-[#F6F3EE] text-xl font-medium" style={{ fontFamily: 'var(--font-serif)' }}>
+                    Isha Singasane
+                  </p>
+                  <span className="text-xs text-[#CFA56A] tracking-[0.2em] uppercase font-mono">
+                    Founder & Spiritual Practitioner
                   </span>
                 </div>
               </div>
