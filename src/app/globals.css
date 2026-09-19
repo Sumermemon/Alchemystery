@@ -1,26 +1,154 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/**
+ * ALCHEMYSTERY — Design Token Foundation
+ *
+ * All visual tokens are defined here as CSS custom properties and
+ * registered with Tailwind v4 via @theme. This is the single source
+ * of truth for the design system. No token values should appear
+ * scattered throughout component files.
+ *
+ * Colour palette based on the Alchemystery brand reference:
+ *   Midnight blue  — primary dark background
+ *   Indigo         — secondary / card backgrounds
+ *   Amethyst       — accent colour
+ *   Champagne gold — primary CTA / headings accent
+ *   Warm ivory     — body text on dark backgrounds
+ *
+ * Typography:
+ *   Playfair Display — editorial serif for headings (elegant, expressive)
+ *   Inter            — clean modern sans-serif for body and UI
+ */
+
+@theme {
+  /* ── Colour palette ─────────────────────────────────────────── */
+  --color-midnight:     #0B0F1E;
+  --color-midnight-50:  #1a2035;
+  --color-midnight-100: #141929;
+
+  --color-indigo:       #1E2D5A;
+  --color-indigo-50:    #253468;
+  --color-indigo-100:   #1a2750;
+
+  --color-amethyst:     #6C3D8C;
+  --color-amethyst-50:  #7d489f;
+  --color-amethyst-100: #5c3378;
+
+  --color-gold:         #C9A84C;
+  --color-gold-50:      #d4b86a;
+  --color-gold-100:     #b8922e;
+  --color-gold-muted:   #a8894a;
+
+  --color-ivory:        #F4EDD3;
+  --color-ivory-50:     #f9f5ea;
+  --color-ivory-100:    #ede3c2;
+
+  --color-slate-muted:  #8892AA;
+  --color-slate-dark:   #4a5568;
+
+  /* Semantic colour aliases */
+  --color-background:   var(--color-midnight);
+  --color-surface:      var(--color-midnight-50);
+  --color-surface-alt:  var(--color-indigo);
+  --color-foreground:   var(--color-ivory);
+  --color-muted:        var(--color-slate-muted);
+  --color-accent:       var(--color-gold);
+  --color-accent-hover: var(--color-gold-50);
+  --color-highlight:    var(--color-amethyst);
+  --color-border:       rgba(200, 170, 75, 0.15);
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+
+  /* ── Typography ─────────────────────────────────────────────── */
+  --font-serif: var(--font-playfair), 'Playfair Display', Georgia, serif;
+  --font-sans:  var(--font-inter), 'Inter', system-ui, sans-serif;
+
+  /* ── Spacing scale additions ─────────────────────────────────── */
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-30: 7.5rem;
+
+  /* ── Border radius ───────────────────────────────────────────── */
+  --radius-sm:  0.25rem;
+  --radius-md:  0.5rem;
+  --radius-lg:  0.75rem;
+  --radius-xl:  1rem;
+  --radius-2xl: 1.5rem;
+
+  /* ── Shadows ─────────────────────────────────────────────────── */
+  --shadow-gold:   0 0 0 1px rgba(201, 168, 76, 0.2);
+  --shadow-card:   0 4px 24px rgba(0, 0, 0, 0.35);
+  --shadow-elevated: 0 8px 40px rgba(0, 0, 0, 0.5);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ── Base styles ──────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-midnight);
+  color: var(--color-ivory);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+/* ── Typography base ─────────────────────────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-ivory);
+}
+
+p {
+  color: var(--color-slate-muted);
+  line-height: 1.7;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ── Focus styles (accessibility) ────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-midnight);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-indigo);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold-muted);
+}
+
+/* ── Selection ───────────────────────────────────────────────── */
+
+::selection {
+  background: rgba(201, 168, 76, 0.25);
+  color: var(--color-ivory);
 }
