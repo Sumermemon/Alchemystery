@@ -29,6 +29,18 @@ export async function getAllFaqs(): Promise<FaqRow[]> {
   return data ?? [];
 }
 
+export async function getFaqById(id: string): Promise<FaqRow | null> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('faqs')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
+
+  if (error) throw new Error(`[FaqRepository] getFaqById: ${error.message}`);
+  return data;
+}
+
 export async function createFaq(payload: InsertFaq): Promise<FaqRow> {
   const supabase = await createClient();
   const { data, error } = await supabase

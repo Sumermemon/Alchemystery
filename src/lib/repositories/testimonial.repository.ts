@@ -29,6 +29,18 @@ export async function getAllTestimonials(): Promise<TestimonialRow[]> {
   return data ?? [];
 }
 
+export async function getTestimonialById(id: string): Promise<TestimonialRow | null> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('testimonials')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
+
+  if (error) throw new Error(`[TestimonialRepository] getTestimonialById: ${error.message}`);
+  return data;
+}
+
 export async function createTestimonial(payload: InsertTestimonial): Promise<TestimonialRow> {
   const supabase = await createClient();
   const { data, error } = await supabase
