@@ -70,7 +70,27 @@ export function SettingsForm({ initialData }: SettingsFormProps) {
   async function handleTestSmtp() {
     setTestStatus('sending');
     try {
-      const result = await testSmtpAction();
+      const host = (document.getElementById('smtp_host') as HTMLInputElement)?.value;
+      const port = (document.getElementById('smtp_port') as HTMLInputElement)?.value;
+      const secure = (document.getElementById('smtp_secure') as HTMLSelectElement)?.value;
+      const user = (document.getElementById('smtp_user') as HTMLInputElement)?.value;
+      const pass = (document.getElementById('smtp_pass') as HTMLInputElement)?.value;
+      const fromName = (document.getElementById('smtp_from_name') as HTMLInputElement)?.value;
+      const fromEmail = (document.getElementById('smtp_from_email') as HTMLInputElement)?.value;
+      const contactEmail = (document.getElementById('contact_email') as HTMLInputElement)?.value;
+
+      const currentFormValues = {
+        smtp_host: host,
+        smtp_port: port,
+        smtp_secure: secure,
+        smtp_user: user,
+        smtp_pass: pass,
+        smtp_from_name: fromName,
+        smtp_from_email: fromEmail,
+        contact_email: contactEmail,
+      };
+
+      const result = await testSmtpAction(currentFormValues);
       if (result.success) {
         success('Test email sent!', result.message);
       } else {
@@ -371,7 +391,7 @@ export function SettingsForm({ initialData }: SettingsFormProps) {
             {testStatus === 'sending' ? '⏳ Sending...' : '✉ Send Test Email'}
           </button>
           <p className="text-xs text-[var(--admin-muted)]">
-            Sends a test email to your Contact Email using the SMTP settings above. <strong>Save first.</strong>
+            Sends a test email to your Contact Email to verify credentials immediately.
           </p>
         </div>
       </div>

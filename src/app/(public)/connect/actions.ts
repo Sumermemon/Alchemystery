@@ -60,7 +60,7 @@ export async function submitEnquiry(payload: EnquiryPayload): Promise<EnquiryRes
     // Send lead notification — non-blocking, never surfaces errors to the user
     try {
       const settings = await getSiteSettings();
-      const toEmail = (settings.contact_email as string) || '';
+      const toEmail = (settings.contact_email as string) || (settings.smtp_user as string) || process.env.SMTP_USER || '';
       if (toEmail) {
         await sendLeadNotificationEmail({
           toEmail,

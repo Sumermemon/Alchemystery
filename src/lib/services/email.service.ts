@@ -46,10 +46,15 @@ export function resolveSmtpConfig(dbSettings?: Partial<SiteSettings>): SmtpConfi
     (dbSettings?.smtp_port as string | null | undefined) ||
     process.env.SMTP_PORT ||
     '587';
+  const parsedPort = parseInt(portStr, 10) || 587;
   const secureStr =
     (dbSettings?.smtp_secure as string | null | undefined) ||
     process.env.SMTP_SECURE ||
     'false';
+
+  // In SMTP standards: port 465 is SSL (secure: true). Port 587 is STARTTLS (secure: false).
+  const secure = parsedPort === 465 ? true : (secureStr === 'true' && parsedPort !== 587);
+
   const fromName =
     (dbSettings?.smtp_from_name as string | null | undefined) ||
     process.env.SMTP_FROM_NAME ||
@@ -60,14 +65,17 @@ export function resolveSmtpConfig(dbSettings?: Partial<SiteSettings>): SmtpConfi
     process.env.SMTP_FROM_EMAIL ||
     user;
 
+  // Clean password: strip all internal whitespace (common with Google 4-letter spaced blocks)
+  const cleanPass = pass.trim().replace(/\s+/g, '');
+
   return {
     host,
-    port: parseInt(portStr, 10) || 587,
-    secure: secureStr === 'true',
-    user,
-    pass,
-    fromName,
-    fromEmail,
+    port: parsedPort,
+    secure,
+    user: user.trim(),
+    pass: cleanPass,
+    fromName: fromName.trim(),
+    fromEmail: fromEmail.trim(),
   };
 }
 
@@ -112,7 +120,9 @@ export async function sendLeadNotificationEmail(payload: LeadEmailPayload): Prom
     secure: smtp.secure,
     auth: { user: smtp.user, pass: smtp.pass },
     tls: { rejectUnauthorized: false },
-  });
+    family: 4, // Force IPv4 to prevent ENETUNREACH on systems without IPv6 routing
+    connectionTimeout: 15000,
+  } as any);
 
   const submittedAt = new Date().toLocaleString('en-IN', {
     timeZone: 'Asia/Kolkata',
@@ -154,5 +164,68 @@ export async function sendLeadNotificationEmail(payload: LeadEmailPayload): Prom
   } catch (err) {
     console.error('[EmailService] Failed to send lead notification:', err);
     return false;
+  }
+}
+
+/**
+ * Diagnostic test email — verifies SMTP credentials and sends a test email.
+ */
+export async function sendTestEmail(
+  toEmail?: string,
+  dbSettings?: Partial<SiteSettings>
+): Promise<{ success: boolean; message: string }> {
+  const smtp = resolveSmtpConfig(dbSettings);
+  if (!smtp) {
+    return {
+      success: false,
+      message: 'SMTP settings are incomplete. Please provide Host, Username, and App Password.',
+    };
+  }
+
+  const targetEmail = toEmail || (dbSettings?.contact_email as string) || smtp.user;
+
+  const transporter = nodemailer.createTransport({
+    host: smtp.host,
+    port: smtp.port,
+    secure: smtp.secure,
+    auth: { user: smtp.user, pass: smtp.pass },
+    tls: { rejectUnauthorized: false },
+    family: 4,
+    connectionTimeout: 15000,
+  } as any);
+
+  try {
+    await transporter.verify();
+    await transporter.sendMail({
+      from: `"${smtp.fromName}" <${smtp.fromEmail}>`,
+      to: targetEmail,
+      subject: `Test Email — ${smtp.fromName}`,
+      text: `Hello,\n\nThis is a test email confirming that your email configuration for ${smtp.fromName} is working properly!\n\nHost: ${smtp.host}:${smtp.port}\nSender: ${smtp.fromEmail}`,
+      html: `<div style="font-family:sans-serif;padding:20px;color:#1A1F2C;"><h2 style="color:#A37D42;">Email Configuration Verified</h2><p>This is a test email confirming that your email configuration for <strong>${escapeHtml(smtp.fromName)}</strong> is active and working properly.</p><p style="font-size:12px;color:#666;">Host: ${escapeHtml(smtp.host)}:${smtp.port}<br/>Sender: ${escapeHtml(smtp.fromEmail)}</p></div>`,
+    });
+    return {
+      success: true,
+      message: `Test email sent successfully to ${targetEmail}!`,
+    };
+  } catch (err: any) {
+    console.error('[EmailService] Test email failed:', err);
+    const errorMsg = err?.message || String(err);
+    if (errorMsg.includes('535') || errorMsg.includes('BadCredentials')) {
+      return {
+        success: false,
+        message:
+          'Gmail authentication failed (535 Bad Credentials). For Gmail, you must use a 16-character Google App Password (not your personal password). Go to myaccount.google.com → Security → 2-Step Verification → App passwords to create one.',
+      };
+    }
+    if (errorMsg.includes('ENETUNREACH') || errorMsg.includes('ETIMEDOUT')) {
+      return {
+        success: false,
+        message: `Could not reach ${smtp.host}:${smtp.port}. Please check your host and port settings.`,
+      };
+    }
+    return {
+      success: false,
+      message: `SMTP error: ${errorMsg}`,
+    };
   }
 }
