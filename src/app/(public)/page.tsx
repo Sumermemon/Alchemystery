@@ -6,6 +6,8 @@ import { getPublishedTestimonials } from '@/lib/repositories/testimonial.reposit
 import { getPublishedBlogPosts } from '@/lib/repositories/blog.repository';
 import { siteConfig } from '@/config/site';
 
+export const dynamic = 'force-dynamic';
+
 // Sections
 import { HeroSection } from '@/components/home/hero-section';
 import { PracticeSection } from '@/components/home/practice-section';

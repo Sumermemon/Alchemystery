@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { getPublishedBlogPosts } from '@/lib/repositories/blog.repository';
 import { getSiteSettings } from '@/lib/repositories/settings.repository';
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
   const brandName = settings.brand_name || 'Alchemystery';

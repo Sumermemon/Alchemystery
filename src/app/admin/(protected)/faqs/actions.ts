@@ -20,7 +20,9 @@ export async function createFaqAction(data: FaqFormData) {
 
   await createFaq({ ...parsed.data, category: parsed.data.category ?? null });
   revalidatePath('/admin/faqs');
+  revalidatePath('/faq');
   revalidatePath('/faqs');
+  revalidatePath('/');
   redirect('/admin/faqs');
 }
 
@@ -35,7 +37,9 @@ export async function updateFaqAction(id: string, data: FaqFormData) {
 
   await updateFaq({ id, ...parsed.data, category: parsed.data.category ?? null });
   revalidatePath('/admin/faqs');
+  revalidatePath('/faq');
   revalidatePath('/faqs');
+  revalidatePath('/');
   redirect('/admin/faqs');
 }
 
@@ -45,5 +49,7 @@ export async function deleteFaqAction(id: string) {
 
   await deleteFaq(id);
   revalidatePath('/admin/faqs');
+  revalidatePath('/faq');
   revalidatePath('/faqs');
+  revalidatePath('/');
 }

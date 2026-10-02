@@ -17,7 +17,9 @@ export async function createBlogPostAction(data: BlogPostFormData) {
 
   await createBlogPost({ ...parsed.data, excerpt: parsed.data.excerpt ?? null, content: parsed.data.content ?? null, cover_image_url: parsed.data.cover_image_url ?? null, seo_title: parsed.data.seo_title ?? null, seo_description: parsed.data.seo_description ?? null, og_image_url: parsed.data.og_image_url ?? null, author_name: parsed.data.author_name ?? null, published_at: parsed.data.published_at ?? null });
   revalidatePath('/admin/blog');
-  revalidatePath('/blog');
+  revalidatePath('/insights');
+  revalidatePath(`/insights/${parsed.data.slug}`);
+  revalidatePath('/');
   redirect('/admin/blog');
 }
 
@@ -32,8 +34,9 @@ export async function updateBlogPostAction(id: string, data: BlogPostFormData) {
 
   await updateBlogPost({ id, ...parsed.data, excerpt: parsed.data.excerpt ?? null, content: parsed.data.content ?? null, cover_image_url: parsed.data.cover_image_url ?? null, seo_title: parsed.data.seo_title ?? null, seo_description: parsed.data.seo_description ?? null, og_image_url: parsed.data.og_image_url ?? null, author_name: parsed.data.author_name ?? null, published_at: parsed.data.published_at ?? null });
   revalidatePath('/admin/blog');
-  revalidatePath('/blog');
-  revalidatePath(`/blog/${parsed.data.slug}`);
+  revalidatePath('/insights');
+  revalidatePath(`/insights/${parsed.data.slug}`);
+  revalidatePath('/');
   redirect('/admin/blog');
 }
 
@@ -43,5 +46,6 @@ export async function deleteBlogPostAction(id: string) {
 
   await deleteBlogPost(id);
   revalidatePath('/admin/blog');
-  revalidatePath('/blog');
+  revalidatePath('/insights');
+  revalidatePath('/');
 }

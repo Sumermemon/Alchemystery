@@ -87,19 +87,19 @@ export function PracticeSection() {
         </div>
 
         {/* Right Column — 3 Pillars (Clarity, Perspective, Alignment with Lotus) */}
-        <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6 pt-4">
+        <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-6 pt-4">
           
           {/* 1. Clarity (Sun) */}
-          <div className="group space-y-4 transition-transform duration-300 hover:-translate-y-1">
+          <div className="group flex flex-col items-center text-center sm:items-start sm:text-left space-y-4 transition-transform duration-300 hover:-translate-y-1">
             <div
-              className="w-18 h-18 sm:w-20 sm:h-20 rounded-full flex items-center justify-center border transition-all duration-300 group-hover:border-[#A37D42] group-hover:shadow-[0_0_24px_rgba(163,125,66,0.18)]"
+              className="w-[84px] h-[84px] sm:w-20 sm:h-20 rounded-full flex items-center justify-center border transition-all duration-300 group-hover:border-[#A37D42] group-hover:shadow-[0_0_24px_rgba(163,125,66,0.18)]"
               style={{
                 borderColor: 'rgba(163, 125, 66, 0.35)',
                 backgroundColor: '#FAF7F2',
               }}
             >
               {/* Sacred Radiant Sun SVG matching Image 2 */}
-              <svg viewBox="0 0 48 48" className="w-8 h-8 text-[#A37D42] transition-transform duration-500 group-hover:rotate-12" fill="none" stroke="currentColor" strokeWidth="1.3">
+              <svg viewBox="0 0 48 48" className="w-9.5 h-9.5 sm:w-8 sm:h-8 text-[#A37D42] transition-transform duration-500 group-hover:rotate-12" fill="none" stroke="currentColor" strokeWidth="1.3">
                 <circle cx="24" cy="24" r="6.5" strokeWidth="1.4" fill="currentColor" fillOpacity="0.08" />
                 {/* 4 Cardinal Rays */}
                 <line x1="24" y1="9" x2="24" y2="13.5" strokeLinecap="round" />
@@ -121,22 +121,22 @@ export function PracticeSection() {
             <h3 className="text-lg font-medium" style={{ fontFamily: 'var(--font-serif)', color: '#1A1F2C' }}>
               Clarity
             </h3>
-            <p className="text-xs sm:text-[13px] leading-relaxed text-[#555C6E]">
+            <p className="text-xs sm:text-[13px] leading-relaxed text-[#555C6E] max-w-xs sm:max-w-none">
               Create space to understand what you&apos;re experiencing.
             </p>
           </div>
 
           {/* 2. Perspective (Crescent Moon) */}
-          <div className="group space-y-4 transition-transform duration-300 hover:-translate-y-1">
+          <div className="group flex flex-col items-center text-center sm:items-start sm:text-left space-y-4 transition-transform duration-300 hover:-translate-y-1">
             <div
-              className="w-18 h-18 sm:w-20 sm:h-20 rounded-full flex items-center justify-center border transition-all duration-300 group-hover:border-[#A37D42] group-hover:shadow-[0_0_24px_rgba(163,125,66,0.18)]"
+              className="w-[84px] h-[84px] sm:w-20 sm:h-20 rounded-full flex items-center justify-center border transition-all duration-300 group-hover:border-[#A37D42] group-hover:shadow-[0_0_24px_rgba(163,125,66,0.18)]"
               style={{
                 borderColor: 'rgba(163, 125, 66, 0.35)',
                 backgroundColor: '#FAF7F2',
               }}
             >
               {/* Sacred Crescent Moon SVG matching Image 2 */}
-              <svg viewBox="0 0 48 48" className="w-8 h-8 text-[#A37D42] transition-transform duration-500 group-hover:-rotate-6" fill="none">
+              <svg viewBox="0 0 48 48" className="w-9.5 h-9.5 sm:w-8 sm:h-8 text-[#A37D42] transition-transform duration-500 group-hover:-rotate-6" fill="none">
                 <path
                   d="M26 13 C19 14.5 15 21 16 28 C17 33.5 21.5 37 27.5 36 C24 32.5 23 26.5 26.5 20.5 C28.5 16.5 31.5 14.5 33.5 13.5 C31 12.8 28.5 12.8 26 13 Z"
                   fill="#A37D42"
@@ -146,22 +146,22 @@ export function PracticeSection() {
             <h3 className="text-lg font-medium" style={{ fontFamily: 'var(--font-serif)', color: '#1A1F2C' }}>
               Perspective
             </h3>
-            <p className="text-xs sm:text-[13px] leading-relaxed text-[#555C6E]">
+            <p className="text-xs sm:text-[13px] leading-relaxed text-[#555C6E] max-w-xs sm:max-w-none">
               Explore patterns, questions and possibilities.
             </p>
           </div>
 
           {/* 3. Alignment (Sacred Lotus Flower) */}
-          <div className="group space-y-4 transition-transform duration-300 hover:-translate-y-1">
+          <div className="group flex flex-col items-center text-center sm:items-start sm:text-left space-y-4 transition-transform duration-300 hover:-translate-y-1">
             <div
-              className="w-18 h-18 sm:w-20 sm:h-20 rounded-full flex items-center justify-center border transition-all duration-300 group-hover:border-[#A37D42] group-hover:shadow-[0_0_24px_rgba(163,125,66,0.18)]"
+              className="w-[84px] h-[84px] sm:w-20 sm:h-20 rounded-full flex items-center justify-center border transition-all duration-300 group-hover:border-[#A37D42] group-hover:shadow-[0_0_24px_rgba(163,125,66,0.18)]"
               style={{
                 borderColor: 'rgba(163, 125, 66, 0.35)',
                 backgroundColor: '#FAF7F2',
               }}
             >
               {/* Sacred Lotus Blossom SVG matching Image 2 */}
-              <svg viewBox="0 0 48 48" className="w-8 h-8 text-[#A37D42] transition-transform duration-500 group-hover:scale-105" fill="none" stroke="currentColor" strokeWidth="1.3">
+              <svg viewBox="0 0 48 48" className="w-9.5 h-9.5 sm:w-8 sm:h-8 text-[#A37D42] transition-transform duration-500 group-hover:scale-105" fill="none" stroke="currentColor" strokeWidth="1.3">
                 {/* Central Petal */}
                 <path d="M24 11 C20.5 17 19.5 23 24 33 C28.5 23 27.5 17 24 11 Z" fill="currentColor" fillOpacity="0.08" />
                 {/* Inner Left Petal */}
@@ -179,7 +179,7 @@ export function PracticeSection() {
             <h3 className="text-lg font-medium" style={{ fontFamily: 'var(--font-serif)', color: '#1A1F2C' }}>
               Alignment
             </h3>
-            <p className="text-xs sm:text-[13px] leading-relaxed text-[#555C6E]">
+            <p className="text-xs sm:text-[13px] leading-relaxed text-[#555C6E] max-w-xs sm:max-w-none">
               Reconnect with what feels meaningful and intentional.
             </p>
           </div>

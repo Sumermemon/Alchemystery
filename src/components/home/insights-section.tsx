@@ -28,7 +28,7 @@ const DEFAULT_POSTS = [
 ];
 
 export function InsightsSection({ posts }: { posts: BlogPostRow[] }) {
-  const displayedPosts = posts && posts.length >= 3 ? posts.slice(0, 3) : DEFAULT_POSTS;
+  const displayedPosts = posts && posts.length > 0 ? posts.slice(0, 3) : DEFAULT_POSTS;
 
   return (
     <section id="insights" className="bg-[#F1EDE2] text-[#1A1F2C] py-20 lg:py-24 px-6 relative border-t border-[#A37D42]/20">
@@ -73,11 +73,8 @@ export function InsightsSection({ posts }: { posts: BlogPostRow[] }) {
               'The language of numbers and what they reveal.',
             ];
 
-            const imgUrl = post.cover_image_url && post.cover_image_url.startsWith('/images/insight_')
-              ? post.cover_image_url
-              : defaultImgs[idx % defaultImgs.length];
-
-            const excerpt = defaultExcerpts[idx % defaultExcerpts.length] || post.excerpt;
+            const imgUrl = post.cover_image_url || defaultImgs[idx % defaultImgs.length];
+            const excerpt = post.excerpt || defaultExcerpts[idx % defaultExcerpts.length];
 
             return (
               <Link 
