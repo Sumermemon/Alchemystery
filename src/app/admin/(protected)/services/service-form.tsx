@@ -73,16 +73,23 @@ export function ServiceForm({ initialData }: ServiceFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 max-w-3xl">
+    <form onSubmit={handleSubmit} className="space-y-8 w-full">
       {error && (
         <div className="p-4 bg-red-900/30 border border-red-900/50 rounded-lg text-red-400 text-sm">
           {error}
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         {/* Left Column - Main Details */}
         <div className="space-y-6">
+          <div className="pb-3 border-b" style={{ borderColor: 'var(--admin-border)' }}>
+            <h2 className="text-xs font-semibold tracking-wider uppercase text-[var(--color-gold)] font-sans">
+              Service Details
+            </h2>
+            <p className="text-xs text-[var(--admin-muted)] mt-0.5">Primary information and descriptive content</p>
+          </div>
+
           <div className="space-y-2">
             <Label htmlFor="title">Title <span className="text-red-400">*</span></Label>
             <Input id="title" name="title" defaultValue={initialData?.title} required />
@@ -95,17 +102,24 @@ export function ServiceForm({ initialData }: ServiceFormProps) {
 
           <div className="space-y-2">
             <Label htmlFor="short_description">Short Description</Label>
-            <Textarea id="short_description" name="short_description" defaultValue={initialData?.short_description || ''} className="h-20" />
+            <Textarea id="short_description" name="short_description" defaultValue={initialData?.short_description || ''} className="h-24" />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="description">Full Description</Label>
-            <Textarea id="description" name="description" defaultValue={initialData?.description || ''} className="h-40" />
+            <Textarea id="description" name="description" defaultValue={initialData?.description || ''} className="h-48" />
           </div>
         </div>
 
         {/* Right Column - Media & Settings */}
         <div className="space-y-6">
+          <div className="pb-3 border-b" style={{ borderColor: 'var(--admin-border)' }}>
+            <h2 className="text-xs font-semibold tracking-wider uppercase text-[var(--color-gold)] font-sans">
+              Media & Pricing
+            </h2>
+            <p className="text-xs text-[var(--admin-muted)] mt-0.5">Visual preview, commercial details, and SEO</p>
+          </div>
+
           <div className="space-y-2">
             <Label>Cover Image</Label>
             <ImageUpload
@@ -116,7 +130,7 @@ export function ServiceForm({ initialData }: ServiceFormProps) {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="price_display">Price Display</Label>
               <Input id="price_display" name="price_display" defaultValue={initialData?.price_display || ''} placeholder="e.g. ₹2,500" />
@@ -128,7 +142,7 @@ export function ServiceForm({ initialData }: ServiceFormProps) {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="status">Status</Label>
               <Select id="status" name="status" defaultValue={initialData?.status || STATUS.DRAFT}>
@@ -145,8 +159,8 @@ export function ServiceForm({ initialData }: ServiceFormProps) {
           </div>
 
           {/* SEO Section */}
-          <div className="pt-4 border-t border-[rgba(255,255,255,0.06)] space-y-4">
-            <h3 className="text-sm font-medium text-[var(--color-ivory)]">SEO Settings</h3>
+          <div className="pt-4 border-t space-y-4" style={{ borderColor: 'var(--admin-border)' }}>
+            <h3 className="text-xs font-semibold tracking-wider uppercase text-[var(--admin-text)]">SEO Settings</h3>
             
             <div className="space-y-2">
               <Label htmlFor="seo_title">SEO Title</Label>
@@ -161,17 +175,17 @@ export function ServiceForm({ initialData }: ServiceFormProps) {
         </div>
       </div>
 
-      <div className="pt-6 border-t border-[rgba(255,255,255,0.06)] flex items-center justify-between">
+      <div className="pt-6 border-t flex items-center justify-between" style={{ borderColor: 'var(--admin-border)' }}>
         {isEditing ? (
           <Button type="button" variant="danger" onClick={handleDelete} disabled={isPending}>
             Delete Service
           </Button>
         ) : (
-          <div></div> // Spacer
+          <div></div>
         )}
         
         <div className="flex gap-4">
-          <Button type="button" variant="ghost" onClick={() => router.push('/admin/services')} disabled={isPending}>
+          <Button type="button" variant="secondary" onClick={() => router.push('/admin/services')} disabled={isPending}>
             Cancel
           </Button>
           <Button type="submit" disabled={isPending}>

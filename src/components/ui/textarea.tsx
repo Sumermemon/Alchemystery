@@ -4,17 +4,22 @@ import { cn } from '@/lib/utils/cn';
 export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, ...props }, ref) => {
+  ({ className, style, ...props }, ref) => {
     return (
       <textarea
         className={cn(
-          'flex min-h-[80px] w-full rounded border px-3 py-2 text-sm text-[var(--color-ivory)] outline-none transition-colors',
-          'bg-[rgba(255,255,255,0.02)] border-[rgba(255,255,255,0.1)]',
-          'focus:border-[rgba(201,168,76,0.5)] focus:bg-[rgba(255,255,255,0.04)]',
+          'flex min-h-[80px] w-full rounded-lg border px-3.5 py-2.5 text-sm font-sans outline-none transition-all duration-150',
+          'focus:ring-2 focus:ring-[var(--color-gold)]/25 focus:border-[var(--color-gold)]',
           'disabled:cursor-not-allowed disabled:opacity-50',
-          'placeholder:text-[var(--color-muted)]',
+          'placeholder:text-[var(--admin-input-placeholder,#94a3b8)]',
           className
         )}
+        style={{
+          background: 'var(--admin-input-bg, rgba(255,255,255,0.03))',
+          borderColor: 'var(--admin-input-border, rgba(255,255,255,0.12))',
+          color: 'var(--admin-input-text, var(--color-ivory))',
+          ...style,
+        }}
         ref={ref}
         {...props}
       />

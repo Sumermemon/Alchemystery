@@ -2,14 +2,17 @@ import * as React from 'react';
 import { cn } from '@/lib/utils/cn';
 
 const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
+  ({ className, style, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn(
-        'rounded-lg border bg-[rgba(255,255,255,0.02)] text-[var(--color-ivory)] shadow-sm',
-        'border-[rgba(255,255,255,0.06)]',
-        className
-      )}
+      className={cn('rounded-2xl border transition-all duration-200', className)}
+      style={{
+        background: 'var(--admin-card-bg, var(--admin-surface, rgba(255,255,255,0.02)))',
+        borderColor: 'var(--admin-card-border, var(--admin-border, rgba(255,255,255,0.07)))',
+        boxShadow: 'var(--admin-card-shadow, 0 4px 20px rgba(0,0,0,0.25))',
+        color: 'var(--admin-text, var(--color-ivory))',
+        ...style,
+      }}
       {...props}
     />
   )
@@ -31,7 +34,7 @@ const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HT
   ({ className, ...props }, ref) => (
     <h3
       ref={ref}
-      className={cn('text-lg font-medium leading-none tracking-tight', className)}
+      className={cn('text-base font-semibold leading-none tracking-tight font-sans', className)}
       {...props}
     />
   )

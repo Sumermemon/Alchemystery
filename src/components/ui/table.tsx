@@ -33,13 +33,17 @@ const TableBody = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes
 TableBody.displayName = 'TableBody';
 
 const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(
-  ({ className, ...props }, ref) => (
+  ({ className, style, ...props }, ref) => (
     <tr
       ref={ref}
       className={cn(
-        'border-b border-[rgba(255,255,255,0.06)] transition-colors hover:bg-[rgba(255,255,255,0.02)] data-[state=selected]:bg-muted',
+        'border-b transition-colors hover:bg-black/[0.02] dark:hover:bg-white/[0.02] data-[state=selected]:bg-muted',
         className
       )}
+      style={{
+        borderColor: 'var(--admin-border, rgba(255,255,255,0.06))',
+        ...style,
+      }}
       {...props}
     />
   )
@@ -47,13 +51,17 @@ const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTML
 TableRow.displayName = 'TableRow';
 
 const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<HTMLTableCellElement>>(
-  ({ className, ...props }, ref) => (
+  ({ className, style, ...props }, ref) => (
     <th
       ref={ref}
       className={cn(
-        'h-10 px-4 text-left align-middle font-medium text-[var(--color-muted)] [&:has([role=checkbox])]:pr-0',
+        'h-10 px-4 text-left align-middle font-semibold font-sans text-xs uppercase tracking-wider [&:has([role=checkbox])]:pr-0',
         className
       )}
+      style={{
+        color: 'var(--admin-muted, var(--color-muted))',
+        ...style,
+      }}
       {...props}
     />
   )
@@ -61,10 +69,14 @@ const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<
 TableHead.displayName = 'TableHead';
 
 const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<HTMLTableCellElement>>(
-  ({ className, ...props }, ref) => (
+  ({ className, style, ...props }, ref) => (
     <td
       ref={ref}
-      className={cn('p-4 align-middle [&:has([role=checkbox])]:pr-0', className)}
+      className={cn('p-4 align-middle font-sans text-sm [&:has([role=checkbox])]:pr-0', className)}
+      style={{
+        color: 'var(--admin-text, inherit)',
+        ...style,
+      }}
       {...props}
     />
   )

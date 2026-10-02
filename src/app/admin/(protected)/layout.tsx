@@ -2,17 +2,13 @@ import { redirect } from 'next/navigation';
 import { requireSuperAdmin } from '@/lib/services/auth.service';
 import { getUnreadEnquiriesCount } from '@/lib/repositories/enquiry.repository';
 import AdminSidebar from '@/components/admin/admin-sidebar';
+import AdminHeader from '@/components/admin/admin-header';
+import { AdminThemeProvider } from '@/components/admin/admin-theme-provider';
+import { ToastProvider } from '@/components/ui/toast';
 
 /**
  * Admin layout — server component.
- *
- * Defense-in-depth authorization:
- * 1. Next.js middleware already redirected unauthenticated users to /admin/login
- * 2. This layout performs the ROLE CHECK — verifying the user is a super_admin
- *    by fetching their profile from Supabase (not trusting any client value)
- * 3. If the role check fails, redirect to /admin/login
- *
- * Every admin child route inherits this protection automatically.
+ * Defense-in-depth authorization + premium UI shell.
  */
 export default async function AdminLayout({
   children,
@@ -26,10 +22,6 @@ export default async function AdminLayout({
     // Supabase unreachable
   }
 
-  // If they reached here but aren't a super_admin, they are authenticated
-  // (otherwise middleware would have caught them), but lack permissions.
-  // We MUST NOT redirect to /admin/login, as that causes an infinite loop
-  // because middleware will redirect them back to /admin.
   if (!authUser) {
     return (
       <div className="min-h-screen flex items-center justify-center px-6" style={{ backgroundColor: '#0B0F1E' }}>
@@ -45,10 +37,7 @@ export default async function AdminLayout({
               Role Elevation Required
             </p>
             <p className="text-[var(--color-muted)] text-sm leading-relaxed">
-              Your account exists, but you do not have <code className="text-[var(--color-ivory)] bg-white/5 px-1 py-0.5 rounded text-xs">super_admin</code> permissions. By default, new users receive the <code className="text-[var(--color-ivory)] bg-white/5 px-1 py-0.5 rounded text-xs">editor</code> role.
-            </p>
-            <p className="text-[var(--color-muted)] text-sm leading-relaxed">
-              Run this SQL in your Supabase project to elevate your role:
+              Your account exists, but you do not have <code className="text-[var(--color-ivory)] bg-white/5 px-1 py-0.5 rounded text-xs">super_admin</code> permissions.
             </p>
             <pre className="text-xs rounded p-3 overflow-x-auto" style={{ backgroundColor: 'rgba(0,0,0,0.4)', color: '#a0aec0' }}>
 {`UPDATE profiles
@@ -59,9 +48,6 @@ WHERE id = (
 );`}
             </pre>
           </div>
-          <p className="text-[var(--color-muted)] text-xs">
-            After updating, refresh this page.
-          </p>
         </div>
       </div>
     );
@@ -70,33 +56,41 @@ WHERE id = (
   const unreadEnquiries = await getUnreadEnquiriesCount();
 
   return (
-    <div className="flex min-h-screen" style={{ backgroundColor: '#0d1022' }}>
-      <AdminSidebar 
-        user={{
-          displayName: authUser.profile.display_name,
-          email: authUser.supabaseUser.email,
-          role: authUser.profile.role,
-        }} 
-        unreadEnquiriesCount={unreadEnquiries}
-      />
-
-      <div className="flex-1 flex flex-col min-w-0">
-        <header
-          className="h-14 flex items-center justify-between px-6 border-b"
-          style={{ borderColor: 'rgba(255,255,255,0.06)', backgroundColor: '#0d1022' }}
+    <AdminThemeProvider>
+      <ToastProvider>
+        <div
+          className="flex min-h-screen font-sans admin-shell"
+          style={{ background: 'var(--admin-bg, #0d1022)', color: 'var(--admin-text)' }}
         >
-          <div className="text-xs text-[var(--color-muted)] tracking-wider uppercase">
-            Admin CMS
-          </div>
-          <div className="text-xs text-[var(--color-muted)]">
-            {authUser.supabaseUser.email}
-          </div>
-        </header>
+          {/* Sidebar */}
+          <AdminSidebar
+            user={{
+              displayName: authUser.profile.display_name,
+              email: authUser.supabaseUser.email,
+              role: authUser.profile.role,
+            }}
+            unreadEnquiriesCount={unreadEnquiries}
+          />
 
-        <main className="flex-1 p-6 overflow-auto">
-          {children}
-        </main>
-      </div>
-    </div>
+          {/* Main content area */}
+          <div className="flex-1 flex flex-col min-w-0">
+            <AdminHeader
+              email={authUser.supabaseUser.email ?? ''}
+              unreadCount={unreadEnquiries}
+            />
+
+            <main
+              className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto min-w-0"
+              style={{ background: 'var(--admin-bg, #0d1022)' }}
+            >
+              {/* Page content wrapper with subtle card feel */}
+              <div className="w-full max-w-[1400px] mx-auto min-w-0">
+                {children}
+              </div>
+            </main>
+          </div>
+        </div>
+      </ToastProvider>
+    </AdminThemeProvider>
   );
 }

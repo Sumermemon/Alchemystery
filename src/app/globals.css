@@ -108,6 +108,22 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.01em;
 }
 
+/* ── Admin Panel Clean Modern Sans Typography ── */
+[data-admin-theme] h1,
+[data-admin-theme] h2,
+[data-admin-theme] h3,
+[data-admin-theme] h4,
+[data-admin-theme] h5,
+[data-admin-theme] h6,
+.admin-shell h1,
+.admin-shell h2,
+.admin-shell h3,
+.admin-shell h4,
+.admin-shell h5,
+.admin-shell h6 {
+  font-family: var(--font-sans);
+}
+
 p {
   line-height: 1.7;
 }

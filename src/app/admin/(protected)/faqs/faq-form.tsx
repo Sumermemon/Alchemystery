@@ -63,28 +63,46 @@ export function FaqForm({ initialData }: FaqFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 max-w-3xl">
+    <form onSubmit={handleSubmit} className="space-y-8 w-full">
       {error && (
         <div className="p-4 bg-red-900/30 border border-red-900/50 rounded-lg text-red-400 text-sm">
           {error}
         </div>
       )}
 
-      <div className="space-y-6">
-        <div className="space-y-2">
-          <Label htmlFor="question">Question <span className="text-red-400">*</span></Label>
-          <Input id="question" name="question" defaultValue={initialData?.question} required />
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left Column - Content */}
+        <div className="lg:col-span-8 space-y-6">
+          <div className="pb-3 border-b" style={{ borderColor: 'var(--admin-border)' }}>
+            <h2 className="text-xs font-semibold tracking-wider uppercase text-[var(--color-gold)] font-sans">
+              Question & Answer
+            </h2>
+            <p className="text-xs text-[var(--admin-muted)] mt-0.5">The primary question and helpful detailed answer</p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="question">Question <span className="text-red-400">*</span></Label>
+            <Input id="question" name="question" defaultValue={initialData?.question} required />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="answer">Answer <span className="text-red-400">*</span></Label>
+            <Textarea id="answer" name="answer" defaultValue={initialData?.answer} required className="h-56" />
+          </div>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="answer">Answer <span className="text-red-400">*</span></Label>
-          <Textarea id="answer" name="answer" defaultValue={initialData?.answer} required className="h-40" />
-        </div>
+        {/* Right Column - Categorization & Status */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="pb-3 border-b" style={{ borderColor: 'var(--admin-border)' }}>
+            <h2 className="text-xs font-semibold tracking-wider uppercase text-[var(--color-gold)] font-sans">
+              Categorization & Status
+            </h2>
+            <p className="text-xs text-[var(--admin-muted)] mt-0.5">Visibility and grouping</p>
+          </div>
 
-        <div className="grid grid-cols-3 gap-4">
           <div className="space-y-2">
             <Label htmlFor="category">Category (Optional)</Label>
-            <Input id="category" name="category" defaultValue={initialData?.category || ''} placeholder="e.g. Booking" />
+            <Input id="category" name="category" defaultValue={initialData?.category || ''} placeholder="e.g. Booking, Pricing" />
           </div>
 
           <div className="space-y-2">
@@ -103,7 +121,7 @@ export function FaqForm({ initialData }: FaqFormProps) {
         </div>
       </div>
 
-      <div className="pt-6 border-t border-[rgba(255,255,255,0.06)] flex items-center justify-between">
+      <div className="pt-6 border-t flex items-center justify-between" style={{ borderColor: 'var(--admin-border)' }}>
         {isEditing ? (
           <Button type="button" variant="danger" onClick={handleDelete} disabled={isPending}>
             Delete FAQ
@@ -113,7 +131,7 @@ export function FaqForm({ initialData }: FaqFormProps) {
         )}
         
         <div className="flex gap-4">
-          <Button type="button" variant="ghost" onClick={() => router.push('/admin/faqs')} disabled={isPending}>
+          <Button type="button" variant="secondary" onClick={() => router.push('/admin/faqs')} disabled={isPending}>
             Cancel
           </Button>
           <Button type="submit" disabled={isPending}>

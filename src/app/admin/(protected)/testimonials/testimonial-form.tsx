@@ -64,54 +64,74 @@ export function TestimonialForm({ initialData }: TestimonialFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 max-w-3xl">
+    <form onSubmit={handleSubmit} className="space-y-8 w-full">
       {error && (
         <div className="p-4 bg-red-900/30 border border-red-900/50 rounded-lg text-red-400 text-sm">
           {error}
         </div>
       )}
 
-      <div className="space-y-6">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="author_name">Author Name <span className="text-red-400">*</span></Label>
-            <Input id="author_name" name="author_name" defaultValue={initialData?.author_name} required />
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left Column - Reflection Content */}
+        <div className="lg:col-span-7 space-y-6">
+          <div className="pb-3 border-b" style={{ borderColor: 'var(--admin-border)' }}>
+            <h2 className="text-xs font-semibold tracking-wider uppercase text-[var(--color-gold)] font-sans">
+              Reflection Content
+            </h2>
+            <p className="text-xs text-[var(--admin-muted)] mt-0.5">Author information and testimonial quote</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="sm:col-span-2 space-y-2">
+              <Label htmlFor="author_name">Author Name <span className="text-red-400">*</span></Label>
+              <Input id="author_name" name="author_name" defaultValue={initialData?.author_name} required />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="author_initials">Author Initials</Label>
+              <Input id="author_initials" name="author_initials" defaultValue={initialData?.author_initials || ''} maxLength={5} placeholder="e.g. SK" />
+            </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="author_initials">Author Initials</Label>
-            <Input id="author_initials" name="author_initials" defaultValue={initialData?.author_initials || ''} maxLength={5} />
+            <Label htmlFor="content">Testimonial Content <span className="text-red-400">*</span></Label>
+            <Textarea id="content" name="content" defaultValue={initialData?.content} required className="h-44" placeholder="Client reflection and experience..." />
           </div>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="content">Testimonial Content <span className="text-red-400">*</span></Label>
-          <Textarea id="content" name="content" defaultValue={initialData?.content} required className="h-32" />
-        </div>
+        {/* Right Column - Publishing & Linkage */}
+        <div className="lg:col-span-5 space-y-6">
+          <div className="pb-3 border-b" style={{ borderColor: 'var(--admin-border)' }}>
+            <h2 className="text-xs font-semibold tracking-wider uppercase text-[var(--color-gold)] font-sans">
+              Publishing & Linkage
+            </h2>
+            <p className="text-xs text-[var(--admin-muted)] mt-0.5">Associated offering and visibility</p>
+          </div>
 
-        <div className="grid grid-cols-3 gap-4">
           <div className="space-y-2">
             <Label htmlFor="service_id">Service ID (Optional)</Label>
-            <Input id="service_id" name="service_id" defaultValue={initialData?.service_id || ''} placeholder="UUID" />
+            <Input id="service_id" name="service_id" defaultValue={initialData?.service_id || ''} placeholder="Associated Service UUID" />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="status">Status</Label>
-            <Select id="status" name="status" defaultValue={initialData?.status || STATUS.DRAFT}>
-              <option value={STATUS.DRAFT}>Draft</option>
-              <option value={STATUS.PUBLISHED}>Published</option>
-              <option value={STATUS.ARCHIVED}>Archived</option>
-            </Select>
-          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="status">Status</Label>
+              <Select id="status" name="status" defaultValue={initialData?.status || STATUS.DRAFT}>
+                <option value={STATUS.DRAFT}>Draft</option>
+                <option value={STATUS.PUBLISHED}>Published</option>
+                <option value={STATUS.ARCHIVED}>Archived</option>
+              </Select>
+            </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="sort_order">Sort Order</Label>
-            <Input id="sort_order" name="sort_order" type="number" min="0" defaultValue={initialData?.sort_order ?? 0} />
+            <div className="space-y-2">
+              <Label htmlFor="sort_order">Sort Order</Label>
+              <Input id="sort_order" name="sort_order" type="number" min="0" defaultValue={initialData?.sort_order ?? 0} />
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="pt-6 border-t border-[rgba(255,255,255,0.06)] flex items-center justify-between">
+      <div className="pt-6 border-t flex items-center justify-between" style={{ borderColor: 'var(--admin-border)' }}>
         {isEditing ? (
           <Button type="button" variant="danger" onClick={handleDelete} disabled={isPending}>
             Delete Testimonial
@@ -121,7 +141,7 @@ export function TestimonialForm({ initialData }: TestimonialFormProps) {
         )}
         
         <div className="flex gap-4">
-          <Button type="button" variant="ghost" onClick={() => router.push('/admin/testimonials')} disabled={isPending}>
+          <Button type="button" variant="secondary" onClick={() => router.push('/admin/testimonials')} disabled={isPending}>
             Cancel
           </Button>
           <Button type="submit" disabled={isPending}>

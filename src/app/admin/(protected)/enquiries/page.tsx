@@ -14,10 +14,10 @@ export default async function AdminEnquiriesPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl text-[var(--color-ivory)]" style={{ fontFamily: 'var(--font-serif)' }}>
+        <h1 className="text-2xl font-bold tracking-tight font-sans text-[var(--admin-text)]">
           Client Enquiries
         </h1>
-        <p className="text-[var(--color-muted)] text-sm mt-1">
+        <p className="text-[var(--admin-muted)] text-sm mt-1">
           Review and respond to session enquiries submitted through the website.
         </p>
       </div>

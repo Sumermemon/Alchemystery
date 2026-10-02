@@ -66,9 +66,15 @@ export function ImageUpload({
   };
 
   return (
-    <div className={cn('space-y-4', className)}>
+    <div className={cn('space-y-4 w-full', className)}>
       {value ? (
-        <div className="relative group w-full aspect-video max-w-sm rounded-lg overflow-hidden border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.02)]">
+        <div
+          className="relative group w-full aspect-video rounded-xl overflow-hidden border"
+          style={{
+            borderColor: 'var(--admin-input-border, rgba(255,255,255,0.12))',
+            background: 'var(--admin-upload-bg, rgba(255,255,255,0.02))',
+          }}
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={value} alt="Uploaded preview" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -85,18 +91,32 @@ export function ImageUpload({
           </div>
         </div>
       ) : (
-        <div className="flex items-center justify-center w-full max-w-sm">
-          <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-[rgba(255,255,255,0.1)] border-dashed rounded-lg cursor-pointer bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] transition-colors">
+        <div className="w-full">
+          <label
+            className="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed rounded-xl cursor-pointer transition-all duration-200"
+            style={{
+              borderColor: 'var(--admin-upload-border, rgba(255,255,255,0.15))',
+              background: 'var(--admin-upload-bg, rgba(255,255,255,0.02))',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'var(--admin-upload-bg-hover, rgba(255,255,255,0.05))';
+              e.currentTarget.style.borderColor = 'var(--color-gold)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'var(--admin-upload-bg, rgba(255,255,255,0.02))';
+              e.currentTarget.style.borderColor = 'var(--admin-upload-border, rgba(255,255,255,0.15))';
+            }}
+          >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               {isUploading ? (
-                <Loader2 className="w-8 h-8 mb-4 text-[var(--color-muted)] animate-spin" />
+                <Loader2 className="w-8 h-8 mb-3 text-[var(--color-gold)] animate-spin" />
               ) : (
-                <UploadCloud className="w-8 h-8 mb-4 text-[var(--color-muted)]" />
+                <UploadCloud className="w-8 h-8 mb-3" style={{ color: 'var(--color-gold)' }} />
               )}
-              <p className="mb-2 text-sm text-[var(--color-ivory)]">
-                <span className="font-semibold">Click to upload</span> or drag and drop
+              <p className="mb-1 text-sm font-sans" style={{ color: 'var(--admin-text)' }}>
+                <span className="font-semibold text-[var(--color-gold)]">Click to upload</span> or drag and drop
               </p>
-              <p className="text-xs text-[var(--color-muted)]">
+              <p className="text-xs font-sans" style={{ color: 'var(--admin-muted)' }}>
                 JPEG, PNG, WEBP (MAX. 5MB)
               </p>
             </div>
@@ -111,7 +131,7 @@ export function ImageUpload({
           </label>
         </div>
       )}
-      {error && <p className="text-sm text-red-400">{error}</p>}
+      {error && <p className="text-sm text-red-500 font-medium">{error}</p>}
     </div>
   );
 }

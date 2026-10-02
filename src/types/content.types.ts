@@ -65,6 +65,14 @@ export interface SiteSettings {
   default_seo_title: string;
   default_seo_description: string;
   footer_text: string | null;
+  // SMTP email notification settings
+  smtp_host: string | null;
+  smtp_port: string | null;
+  smtp_secure: string | null;
+  smtp_user: string | null;
+  smtp_pass: string | null;
+  smtp_from_name: string | null;
+  smtp_from_email: string | null;
 }
 
 /**

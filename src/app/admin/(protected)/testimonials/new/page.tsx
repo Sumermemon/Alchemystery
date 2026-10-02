@@ -5,13 +5,22 @@ export const metadata: Metadata = { title: 'New Testimonial — Admin' };
 
 export default function NewTestimonialPage() {
   return (
-    <div>
-      <div className="mb-8">
-        <h1 className="text-xl text-[var(--color-ivory)]" style={{ fontFamily: 'var(--font-serif)' }}>New Testimonial</h1>
-        <p className="text-[var(--color-muted)] text-sm mt-1">Add a new client reflection.</p>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight text-[var(--admin-text)]">New Testimonial</h1>
+        <p className="text-[var(--admin-muted)] text-sm mt-1">Add a new client reflection.</p>
       </div>
 
-      <TestimonialForm />
+      <div
+        className="w-full rounded-2xl p-4 sm:p-6 md:p-8 transition-colors duration-200"
+        style={{
+          background: 'var(--admin-card-bg)',
+          border: '1px solid var(--admin-border)',
+          boxShadow: 'var(--admin-card-shadow)',
+        }}
+      >
+        <TestimonialForm />
+      </div>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllFaqs } from '@/lib/repositories/faq.repository';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -23,15 +23,17 @@ export default async function AdminFaqsPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-xl text-[var(--color-ivory)]" style={{ fontFamily: 'var(--font-serif)' }}>FAQs</h1>
-          <p className="text-[var(--color-muted)] text-sm mt-1">Manage frequently asked questions</p>
+          <h1 className="text-2xl font-bold tracking-tight font-sans text-[var(--admin-text)]">FAQs</h1>
+          <p className="text-[var(--admin-muted)] text-sm mt-1">Manage frequently asked questions</p>
         </div>
-        <Button>
-          <Link href="/admin/faqs/new">
-            <Plus className="w-4 h-4 mr-2" />
-            New FAQ
-          </Link>
-        </Button>
+        <Link
+          href="/admin/faqs/new"
+          id="new-faq-btn"
+          className={buttonVariants({ variant: 'primary', size: 'md' })}
+        >
+          <Plus className="w-4 h-4 shrink-0" />
+          <span>New FAQ</span>
+        </Link>
       </div>
 
       <Card>
@@ -69,12 +71,14 @@ export default async function AdminFaqsPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button variant="ghost" size="sm">
-                        <Link href={`/admin/faqs/${faq.id}`}>
-                          <Edit className="w-4 h-4" />
-                          <span className="sr-only">Edit</span>
-                        </Link>
-                      </Button>
+                      <Link
+                        href={`/admin/faqs/${faq.id}`}
+                        className={buttonVariants({ variant: 'ghost', size: 'sm' })}
+                        title="Edit"
+                      >
+                        <Edit className="w-4 h-4" />
+                        <span className="sr-only">Edit</span>
+                      </Link>
                     </TableCell>
                   </TableRow>
                 ))

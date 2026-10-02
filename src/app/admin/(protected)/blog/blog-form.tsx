@@ -75,16 +75,23 @@ export function BlogForm({ initialData }: BlogFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 max-w-4xl">
+    <form onSubmit={handleSubmit} className="space-y-8 w-full">
       {error && (
         <div className="p-4 bg-red-900/30 border border-red-900/50 rounded-lg text-red-400 text-sm">
           {error}
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left/Main Column - Content */}
-        <div className="md:col-span-2 space-y-6">
+        <div className="lg:col-span-8 space-y-6">
+          <div className="pb-3 border-b" style={{ borderColor: 'var(--admin-border)' }}>
+            <h2 className="text-xs font-semibold tracking-wider uppercase text-[var(--color-gold)] font-sans">
+              Article Content
+            </h2>
+            <p className="text-xs text-[var(--admin-muted)] mt-0.5">Write and compose your publication</p>
+          </div>
+
           <div className="space-y-2">
             <Label htmlFor="title">Title <span className="text-red-400">*</span></Label>
             <Input id="title" name="title" defaultValue={initialData?.title} required />
@@ -103,12 +110,19 @@ export function BlogForm({ initialData }: BlogFormProps) {
           <div className="space-y-2">
             <Label htmlFor="content">Content (Markdown)</Label>
             <Textarea id="content" name="content" defaultValue={initialData?.content || ''} className="h-96 font-mono text-sm" placeholder="## Introduction..." />
-            <p className="text-xs text-[var(--color-muted)] mt-1">Supports standard Markdown formatting.</p>
+            <p className="text-xs text-[var(--admin-muted)] mt-1">Supports standard Markdown formatting.</p>
           </div>
         </div>
 
         {/* Right Column - Media & Settings */}
-        <div className="space-y-6">
+        <div className="lg:col-span-4 space-y-6">
+          <div className="pb-3 border-b" style={{ borderColor: 'var(--admin-border)' }}>
+            <h2 className="text-xs font-semibold tracking-wider uppercase text-[var(--color-gold)] font-sans">
+              Publishing & Media
+            </h2>
+            <p className="text-xs text-[var(--admin-muted)] mt-0.5">Media assets and metadata</p>
+          </div>
+
           <div className="space-y-2">
             <Label>Cover Image</Label>
             <ImageUpload
@@ -144,8 +158,8 @@ export function BlogForm({ initialData }: BlogFormProps) {
           </div>
 
           {/* SEO Section */}
-          <div className="pt-4 border-t border-[rgba(255,255,255,0.06)] space-y-4">
-            <h3 className="text-sm font-medium text-[var(--color-ivory)]">SEO Settings</h3>
+          <div className="pt-4 border-t space-y-4" style={{ borderColor: 'var(--admin-border)' }}>
+            <h3 className="text-xs font-semibold tracking-wider uppercase text-[var(--admin-text)]">SEO Settings</h3>
             
             <div className="space-y-2">
               <Label htmlFor="seo_title">SEO Title</Label>
@@ -170,17 +184,17 @@ export function BlogForm({ initialData }: BlogFormProps) {
         </div>
       </div>
 
-      <div className="pt-6 border-t border-[rgba(255,255,255,0.06)] flex items-center justify-between">
+      <div className="pt-6 border-t flex items-center justify-between" style={{ borderColor: 'var(--admin-border)' }}>
         {isEditing ? (
           <Button type="button" variant="danger" onClick={handleDelete} disabled={isPending}>
             Delete Post
           </Button>
         ) : (
-          <div></div> // Spacer
+          <div></div>
         )}
         
         <div className="flex gap-4">
-          <Button type="button" variant="ghost" onClick={() => router.push('/admin/blog')} disabled={isPending}>
+          <Button type="button" variant="secondary" onClick={() => router.push('/admin/blog')} disabled={isPending}>
             Cancel
           </Button>
           <Button type="submit" disabled={isPending}>

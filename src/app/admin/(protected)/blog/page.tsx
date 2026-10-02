@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllBlogPosts } from '@/lib/repositories/blog.repository';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -24,15 +24,17 @@ export default async function AdminBlogPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-xl text-[var(--color-ivory)]" style={{ fontFamily: 'var(--font-serif)' }}>Blog Posts</h1>
-          <p className="text-[var(--color-muted)] text-sm mt-1">Manage articles and journal entries</p>
+          <h1 className="text-2xl font-bold tracking-tight font-sans text-[var(--admin-text)]">Blog Posts</h1>
+          <p className="text-[var(--admin-muted)] text-sm mt-1">Manage articles and journal entries</p>
         </div>
-        <Button>
-          <Link href="/admin/blog/new" id="new-post-btn">
-            <PenTool className="w-4 h-4 mr-2" />
-            New Post
-          </Link>
-        </Button>
+        <Link
+          href="/admin/blog/new"
+          id="new-post-btn"
+          className={buttonVariants({ variant: 'primary', size: 'md' })}
+        >
+          <PenTool className="w-4 h-4 shrink-0" />
+          <span>New Post</span>
+        </Link>
       </div>
 
       <Card>
@@ -50,16 +52,16 @@ export default async function AdminBlogPage() {
             <TableBody>
               {posts.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center h-24 text-[var(--color-muted)]">
+                  <TableCell colSpan={5} className="text-center h-24 text-[var(--admin-muted)]">
                     No blog posts found. Create one to get started.
                   </TableCell>
                 </TableRow>
               ) : (
                 posts.map((post) => (
                   <TableRow key={post.id}>
-                    <TableCell className="font-medium text-[var(--color-ivory)]">
+                    <TableCell className="font-medium text-[var(--admin-text)]">
                       {post.title}
-                      <div className="text-xs text-[var(--color-muted)] font-normal mt-0.5">
+                      <div className="text-xs text-[var(--admin-muted)] font-normal mt-0.5">
                         /{post.slug}
                       </div>
                     </TableCell>
@@ -75,12 +77,14 @@ export default async function AdminBlogPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button variant="ghost" size="sm">
-                        <Link href={`/admin/blog/${post.id}`}>
-                          <Edit className="w-4 h-4" />
-                          <span className="sr-only">Edit</span>
-                        </Link>
-                      </Button>
+                      <Link
+                        href={`/admin/blog/${post.id}`}
+                        className={buttonVariants({ variant: 'ghost', size: 'sm' })}
+                        title="Edit"
+                      >
+                        <Edit className="w-4 h-4" />
+                        <span className="sr-only">Edit</span>
+                      </Link>
                     </TableCell>
                   </TableRow>
                 ))

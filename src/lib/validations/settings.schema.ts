@@ -31,6 +31,14 @@ export const siteSettingsFormSchema = z.object({
   default_seo_title: z.string().max(70).optional(),
   default_seo_description: z.string().max(160).optional(),
   footer_text: z.string().max(500).nullable().optional(),
+  // SMTP — stored in DB, used server-side only for lead notification emails
+  smtp_host: z.string().max(200).nullable().optional(),
+  smtp_port: z.string().max(10).nullable().optional(),
+  smtp_secure: z.string().max(10).nullable().optional(),
+  smtp_user: z.string().max(200).nullable().optional(),
+  smtp_pass: z.string().max(500).nullable().optional(),
+  smtp_from_name: z.string().max(100).nullable().optional(),
+  smtp_from_email: z.string().max(200).nullable().optional(),
 });
 
 export type SiteSettingsFormData = z.infer<typeof siteSettingsFormSchema>;

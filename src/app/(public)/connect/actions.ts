@@ -20,9 +20,8 @@ export type EnquiryResult = {
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function submitEnquiry(payload: EnquiryPayload): Promise<EnquiryResult> {
-  // Anti-bot honeypot check: Bots fill this hidden input
+  // Anti-bot honeypot check
   if (payload.honeypot && payload.honeypot.trim().length > 0) {
-    // Silently return success to bot without saving
     return { success: true };
   }
 
@@ -31,15 +30,12 @@ export async function submitEnquiry(payload: EnquiryPayload): Promise<EnquiryRes
   const message = (payload.message || '').trim();
   const sessionType = (payload.session_type || '').trim() || null;
 
-  // Validation
   if (name.length < 2) {
     return { success: false, error: 'Please provide your name.' };
   }
-
   if (!email || !EMAIL_REGEX.test(email)) {
     return { success: false, error: 'Please provide a valid email address.' };
   }
-
   if (message.length < 5) {
     return { success: false, error: 'Please write a brief message (at least 5 characters).' };
   }
@@ -55,14 +51,13 @@ export async function submitEnquiry(payload: EnquiryPayload): Promise<EnquiryRes
 
     if (error) {
       console.error('[EnquiryAction] insert error:', error.message);
-      // If table doesn't exist yet, still show success to user so front-end does not break
       if (error.code === 'PGRST205' || error.code === '42P01') {
         return { success: true };
       }
       return { success: false, error: 'Something went wrong. Please try again.' };
     }
 
-    // Send lead notification email (non-blocking — we don't fail the user if email fails)
+    // Send lead notification — non-blocking, never surfaces errors to the user
     try {
       const settings = await getSiteSettings();
       const toEmail = (settings.contact_email as string) || '';
@@ -73,10 +68,10 @@ export async function submitEnquiry(payload: EnquiryPayload): Promise<EnquiryRes
           visitorEmail: email,
           sessionType,
           message,
+          dbSettings: settings, // pass settings so SMTP config is read from DB
         });
       }
     } catch (emailErr) {
-      // Log but never surface to the user
       console.error('[EnquiryAction] email notification failed:', emailErr);
     }
 

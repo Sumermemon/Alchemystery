@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllServices } from '@/lib/repositories/service.repository';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -23,15 +23,17 @@ export default async function AdminServicesPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-xl text-[var(--color-ivory)]" style={{ fontFamily: 'var(--font-serif)' }}>Services</h1>
-          <p className="text-[var(--color-muted)] text-sm mt-1">Manage sessions & offerings</p>
+          <h1 className="text-2xl font-bold tracking-tight font-sans text-[var(--admin-text)]">Services</h1>
+          <p className="text-[var(--admin-muted)] text-sm mt-1">Manage sessions & offerings</p>
         </div>
-        <Button>
-          <Link href="/admin/services/new" id="new-service-btn">
-            <Sparkles className="w-4 h-4 mr-2" />
-            New Service
-          </Link>
-        </Button>
+        <Link
+          href="/admin/services/new"
+          id="new-service-btn"
+          className={buttonVariants({ variant: 'primary', size: 'md' })}
+        >
+          <Sparkles className="w-4 h-4 shrink-0" />
+          <span>New Service</span>
+        </Link>
       </div>
 
       <Card>
@@ -56,9 +58,9 @@ export default async function AdminServicesPage() {
               ) : (
                 services.map((service) => (
                   <TableRow key={service.id}>
-                    <TableCell className="font-medium text-[var(--color-ivory)]">
+                    <TableCell className="font-medium text-[var(--admin-text)]">
                       {service.title}
-                      <div className="text-xs text-[var(--color-muted)] font-normal mt-0.5">
+                      <div className="text-xs text-[var(--admin-muted)] font-normal mt-0.5">
                         /{service.slug}
                       </div>
                     </TableCell>
@@ -72,12 +74,14 @@ export default async function AdminServicesPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button variant="ghost" size="sm">
-                        <Link href={`/admin/services/${service.id}`}>
-                          <Edit className="w-4 h-4" />
-                          <span className="sr-only">Edit</span>
-                        </Link>
-                      </Button>
+                      <Link
+                        href={`/admin/services/${service.id}`}
+                        className={buttonVariants({ variant: 'ghost', size: 'sm' })}
+                        title="Edit"
+                      >
+                        <Edit className="w-4 h-4" />
+                        <span className="sr-only">Edit</span>
+                      </Link>
                     </TableCell>
                   </TableRow>
                 ))

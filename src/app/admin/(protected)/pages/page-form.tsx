@@ -67,15 +67,23 @@ export function PageForm({ initialData }: PageFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 max-w-3xl">
+    <form onSubmit={handleSubmit} className="space-y-8 w-full">
       {error && (
         <div className="p-4 bg-red-900/30 border border-red-900/50 rounded-lg text-red-400 text-sm">
           {error}
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        {/* Left Column - General Details */}
         <div className="space-y-6">
+          <div className="pb-3 border-b" style={{ borderColor: 'var(--admin-border)' }}>
+            <h2 className="text-xs font-semibold tracking-wider uppercase text-[var(--color-gold)] font-sans">
+              Page Details
+            </h2>
+            <p className="text-xs text-[var(--admin-muted)] mt-0.5">Title, route slug, and publication status</p>
+          </div>
+
           <div className="space-y-2">
             <Label htmlFor="title">Page Title <span className="text-red-400">*</span></Label>
             <Input id="title" name="title" defaultValue={initialData?.title} required />
@@ -96,8 +104,14 @@ export function PageForm({ initialData }: PageFormProps) {
           </div>
         </div>
 
+        {/* Right Column - SEO Settings */}
         <div className="space-y-6">
-          <h3 className="text-sm font-medium text-[var(--color-ivory)]">SEO Settings</h3>
+          <div className="pb-3 border-b" style={{ borderColor: 'var(--admin-border)' }}>
+            <h2 className="text-xs font-semibold tracking-wider uppercase text-[var(--color-gold)] font-sans">
+              SEO & Social Sharing
+            </h2>
+            <p className="text-xs text-[var(--admin-muted)] mt-0.5">Search engine metadata and preview banner</p>
+          </div>
           
           <div className="space-y-2">
             <Label htmlFor="seo_title">SEO Title</Label>
@@ -121,7 +135,7 @@ export function PageForm({ initialData }: PageFormProps) {
         </div>
       </div>
 
-      <div className="pt-6 border-t border-[rgba(255,255,255,0.06)] flex items-center justify-between">
+      <div className="pt-6 border-t flex items-center justify-between" style={{ borderColor: 'var(--admin-border)' }}>
         {isEditing ? (
           <Button type="button" variant="danger" onClick={handleDelete} disabled={isPending}>
             Delete Page
@@ -131,7 +145,7 @@ export function PageForm({ initialData }: PageFormProps) {
         )}
         
         <div className="flex gap-4">
-          <Button type="button" variant="ghost" onClick={() => router.push('/admin/pages')} disabled={isPending}>
+          <Button type="button" variant="secondary" onClick={() => router.push('/admin/pages')} disabled={isPending}>
             Cancel
           </Button>
           <Button type="submit" disabled={isPending}>
