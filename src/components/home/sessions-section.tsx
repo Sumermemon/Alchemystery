@@ -49,7 +49,7 @@ export function SessionsSection({ services }: { services: ServiceRow[] }) {
   });
 
   return (
-    <section className="bg-[#0B0F1E] py-24 px-6 relative border-t border-white/[0.04]">
+    <section id="sessions" className="bg-[#0B0F1E] py-24 px-6 relative border-t border-white/[0.04]">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">

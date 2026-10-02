@@ -1,6 +1,8 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { getSiteSettings } from '@/lib/repositories/settings.repository';
+import { sendLeadNotificationEmail } from '@/lib/services/email.service';
 
 export type EnquiryPayload = {
   name: string;
@@ -58,6 +60,24 @@ export async function submitEnquiry(payload: EnquiryPayload): Promise<EnquiryRes
         return { success: true };
       }
       return { success: false, error: 'Something went wrong. Please try again.' };
+    }
+
+    // Send lead notification email (non-blocking — we don't fail the user if email fails)
+    try {
+      const settings = await getSiteSettings();
+      const toEmail = (settings.contact_email as string) || '';
+      if (toEmail) {
+        await sendLeadNotificationEmail({
+          toEmail,
+          visitorName: name,
+          visitorEmail: email,
+          sessionType,
+          message,
+        });
+      }
+    } catch (emailErr) {
+      // Log but never surface to the user
+      console.error('[EnquiryAction] email notification failed:', emailErr);
     }
 
     return { success: true };

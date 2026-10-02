@@ -28,7 +28,7 @@ export function TestimonialsSection({ testimonials }: { testimonials?: Testimoni
   const current = items[index] || items[0];
 
   return (
-    <section className="bg-[#0B0F1E] py-24 px-6 relative overflow-hidden border-t border-white/[0.04]">
+    <section id="testimonials" className="bg-[#0B0F1E] py-24 px-6 relative overflow-hidden border-t border-white/[0.04]">
       {/* Background celestial glow */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-[#8A5CF6]/10 rounded-full blur-[100px] pointer-events-none" />
 

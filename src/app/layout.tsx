@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Inter, Playfair_Display, Alex_Brush } from 'next/font/google';
 import './globals.css';
 import { siteConfig } from '@/config/site';
 
@@ -16,6 +16,14 @@ const playfair = Playfair_Display({
   variable: '--font-playfair',
   display: 'swap',
   style: ['normal', 'italic'],
+});
+
+// Alex Brush — elegant cursive handwriting for practitioner signature
+const signatureFont = Alex_Brush({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-signature',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -54,7 +62,7 @@ export default function RootLayout({
     : null;
 
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable} ${signatureFont.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

@@ -39,11 +39,14 @@ export default async function ConnectPage() {
   ]);
 
   const availableSessionTitles = services.map((s) => s.title);
-  const contactPhone = (settings.contact_phone as string) || '+919876543210';
-  const cleanPhone = contactPhone.replace(/[^0-9]/g, '');
-  const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(
-    'Hello Isha, I would like to enquire about a session at Alchemystery.'
-  )}`;
+  // Prefer dedicated whatsapp number, fall back to contact_phone
+  const whatsappNumber = (settings.whatsapp as string) || (settings.contact_phone as string) || '';
+  const cleanPhone = whatsappNumber.replace(/[^0-9]/g, '');
+  const whatsappUrl = cleanPhone
+    ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(
+        'Hello Isha, I would like to enquire about a session at Alchemystery.'
+      )}`
+    : '#';
 
   return (
     <div className="min-h-screen">

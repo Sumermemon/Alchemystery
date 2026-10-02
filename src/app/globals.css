@@ -150,3 +150,110 @@ a {
   background: rgba(201, 168, 76, 0.25);
   color: var(--color-ivory);
 }
+
+/* ── Spiritual & Alchemical Celestial Animations ─────────────── */
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse-slower {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-150%);
+  }
+  100% {
+    transform: translateX(150%);
+  }
+}
+
+@keyframes celestialGlow {
+  0%, 100% {
+    opacity: 0.65;
+    filter: drop-shadow(0 0 10px rgba(207, 165, 106, 0.35));
+  }
+  50% {
+    opacity: 0.95;
+    filter: drop-shadow(0 0 24px rgba(207, 165, 106, 0.75));
+  }
+}
+
+@keyframes crystalBreath {
+  0%, 100% {
+    opacity: 0.25;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes starTwinkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 50s linear infinite;
+}
+
+.animate-spin-medium {
+  animation: spin-slow 12s linear infinite;
+}
+
+.animate-spin-reverse-slower {
+  animation: spin-reverse-slower 75s linear infinite;
+}
+
+.animate-spin-reverse-medium {
+  animation: spin-reverse-slower 9s linear infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite ease-in-out;
+}
+
+.animate-celestial-glow {
+  animation: celestialGlow 6s ease-in-out infinite;
+}
+
+.animate-crystal-breath {
+  animation: crystalBreath 8s ease-in-out infinite;
+}
+
+.animate-star-twinkle {
+  animation: starTwinkle 3.5s ease-in-out infinite;
+}
+
+.animate-float-gentle {
+  animation: floatGentle 6s ease-in-out infinite;
+}
