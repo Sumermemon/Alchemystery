@@ -141,6 +141,42 @@ a {
   border-radius: 2px;
 }
 
+/* ── Form Select & Options Dark Theme ──────────────────────────── */
+select,
+select option {
+  color-scheme: dark;
+}
+
+[data-admin-theme] select,
+.admin-shell select,
+select option {
+  background-color: #0e1327 !important;
+  color: #f0ede6 !important;
+}
+
+select option {
+  background-color: #0e1327 !important;
+  color: #f0ede6 !important;
+  padding: 10px 14px;
+}
+
+select option:checked,
+select option:hover {
+  background-color: #1e284a !important;
+  color: #c9a84c !important;
+}
+
+@keyframes toastSlideIn {
+  from {
+    transform: translateX(100%) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
 /* ── Scrollbar ───────────────────────────────────────────────── */
 
 ::-webkit-scrollbar {

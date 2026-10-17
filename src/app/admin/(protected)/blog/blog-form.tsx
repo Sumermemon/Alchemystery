@@ -12,12 +12,15 @@ import { Select } from '@/components/ui/select';
 import { ImageUpload } from '@/components/admin/image-upload';
 import { STATUS } from '@/constants/status';
 
+import { useToast } from '@/components/ui/toast';
+
 interface BlogFormProps {
   initialData?: BlogPostRow;
 }
 
 export function BlogForm({ initialData }: BlogFormProps) {
   const router = useRouter();
+  const { success: showSuccess, error: showError } = useToast();
   const [isPending, setIsPending] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   
@@ -52,11 +55,19 @@ export function BlogForm({ initialData }: BlogFormProps) {
     try {
       if (isEditing) {
         await updateBlogPostAction(initialData.id, payload);
+        showSuccess('Post Updated', `"${payload.title}" has been saved.`);
+        router.refresh();
       } else {
         await createBlogPostAction(payload);
+        showSuccess('Post Created', `"${payload.title}" has been published.`);
+        router.push('/admin/blog');
+        router.refresh();
       }
     } catch (err: any) {
-      setError(err.message || 'An error occurred while saving.');
+      const msg = err.message || 'An error occurred while saving.';
+      setError(msg);
+      showError('Save Failed', msg);
+    } finally {
       setIsPending(false);
     }
   }
@@ -67,9 +78,13 @@ export function BlogForm({ initialData }: BlogFormProps) {
     setIsPending(true);
     try {
       await deleteBlogPostAction(initialData.id);
+      showSuccess('Post Deleted', `"${initialData.title}" was deleted.`);
       router.push('/admin/blog');
+      router.refresh();
     } catch (err: any) {
-      setError(err.message || 'An error occurred while deleting.');
+      const msg = err.message || 'An error occurred while deleting.';
+      setError(msg);
+      showError('Delete Failed', msg);
       setIsPending(false);
     }
   }

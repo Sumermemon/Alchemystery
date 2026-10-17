@@ -12,7 +12,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Edit, Plus } from 'lucide-react';
+import { Edit, Plus, ExternalLink } from 'lucide-react';
+import { deletePageAction } from './actions';
+import { DeleteActionButton } from '@/components/admin/delete-action-button';
 
 export const metadata: Metadata = { title: 'Pages — Admin' };
 
@@ -61,7 +63,16 @@ export default async function AdminPagesPage() {
                       {page.title}
                     </TableCell>
                     <TableCell>
-                      /{page.slug}
+                      <a
+                        href={`/${page.slug}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[var(--color-gold)] hover:underline inline-flex items-center gap-1.5 font-mono text-xs"
+                        title="View live page"
+                      >
+                        <span>/{page.slug}</span>
+                        <ExternalLink className="w-3 h-3 opacity-60" />
+                      </a>
                     </TableCell>
                     <TableCell>
                       <Badge 
@@ -71,14 +82,22 @@ export default async function AdminPagesPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Link
-                        href={`/admin/pages/${page.id}`}
-                        className={buttonVariants({ variant: 'ghost', size: 'sm' })}
-                        title="Edit"
-                      >
-                        <Edit className="w-4 h-4" />
-                        <span className="sr-only">Edit</span>
-                      </Link>
+                      <div className="flex items-center justify-end gap-1">
+                        <Link
+                          href={`/admin/pages/${page.id}`}
+                          className={buttonVariants({ variant: 'ghost', size: 'sm' })}
+                          title="Edit"
+                        >
+                          <Edit className="w-4 h-4" />
+                          <span className="sr-only">Edit</span>
+                        </Link>
+                        <DeleteActionButton
+                          id={page.id}
+                          itemName={page.title}
+                          itemType="page"
+                          onDelete={deletePageAction}
+                        />
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))

@@ -5,11 +5,11 @@ import type { TestimonialRow } from '@/types/database.types';
 
 const DEFAULT_TESTIMONIALS = [
   {
-    content: "Working with Isha brought a clarity and calm that stayed with me long after our session ended. Her readings are deep, insightful, and profoundly grounding.",
+    content: "I came in with a question and somehow left understanding myself a little better. The whole experience felt incredibly comfortable and judgment-free.",
     author_name: "R. S.",
   },
   {
-    content: "The Akashic Records reading gave me answers to questions I had been holding for years. A truly transformative and sacred experience.",
+    content: "Working with Isha brought a clarity and calm that stayed with me long after our session ended. Her readings are deep, insightful, and profoundly grounding.",
     author_name: "Piyush M.",
   },
   {

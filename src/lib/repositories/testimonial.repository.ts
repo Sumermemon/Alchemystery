@@ -8,15 +8,24 @@ import { STATUS } from '@/constants/status';
 import type { TestimonialRow, InsertTestimonial, UpdateTestimonial } from '@/types/database.types';
 
 export async function getPublishedTestimonials(): Promise<TestimonialRow[]> {
-  const supabase = createPublicClient();
-  const { data, error } = await supabase
-    .from('testimonials')
-    .select('*')
-    .eq('status', STATUS.PUBLISHED)
-    .order('sort_order', { ascending: true });
+  try {
+    const supabase = createPublicClient();
+    const { data, error } = await supabase
+      .from('testimonials')
+      .select('*')
+      .eq('status', STATUS.PUBLISHED)
+      .order('sort_order', { ascending: true });
 
-  if (error) throw new Error(`[TestimonialRepository] getPublishedTestimonials: ${error.message}`);
-  return data ?? [];
+    if (error) {
+      console.warn(`[TestimonialRepository] getPublishedTestimonials warning: ${error.message}`);
+      return [];
+    }
+    return data ?? [];
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn(`[TestimonialRepository] getPublishedTestimonials network error: ${msg}`);
+    return [];
+  }
 }
 
 export async function getAllTestimonials(): Promise<TestimonialRow[]> {

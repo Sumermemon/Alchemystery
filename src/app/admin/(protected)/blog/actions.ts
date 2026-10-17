@@ -20,7 +20,7 @@ export async function createBlogPostAction(data: BlogPostFormData) {
   revalidatePath('/insights');
   revalidatePath(`/insights/${parsed.data.slug}`);
   revalidatePath('/');
-  redirect('/admin/blog');
+  return { success: true };
 }
 
 export async function updateBlogPostAction(id: string, data: BlogPostFormData) {
@@ -37,7 +37,7 @@ export async function updateBlogPostAction(id: string, data: BlogPostFormData) {
   revalidatePath('/insights');
   revalidatePath(`/insights/${parsed.data.slug}`);
   revalidatePath('/');
-  redirect('/admin/blog');
+  return { success: true };
 }
 
 export async function deleteBlogPostAction(id: string) {
@@ -48,4 +48,5 @@ export async function deleteBlogPostAction(id: string) {
   revalidatePath('/admin/blog');
   revalidatePath('/insights');
   revalidatePath('/');
+  return { success: true };
 }

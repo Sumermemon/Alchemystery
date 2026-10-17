@@ -11,14 +11,23 @@ import type { SiteSettings } from '@/types/content.types';
 
 /** Fetch all site settings and return as a typed map */
 export async function getSiteSettings(): Promise<Partial<SiteSettings>> {
-  const supabase = createPublicClient();
-  const { data, error } = await supabase
-    .from('site_settings')
-    .select('*')
-    .order('key', { ascending: true });
+  try {
+    const supabase = createPublicClient();
+    const { data, error } = await supabase
+      .from('site_settings')
+      .select('*')
+      .order('key', { ascending: true });
 
-  if (error) throw new Error(`[SettingsRepository] getSiteSettings: ${error.message}`);
-  return buildSiteSettings(data ?? []);
+    if (error) {
+      console.warn(`[SettingsRepository] getSiteSettings warning: ${error.message}`);
+      return buildSiteSettings([]);
+    }
+    return buildSiteSettings(data ?? []);
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn(`[SettingsRepository] getSiteSettings network error: ${msg}`);
+    return buildSiteSettings([]);
+  }
 }
 
 /** Fetch the raw rows — for the admin settings editor */

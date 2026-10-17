@@ -13,6 +13,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Edit, Plus } from 'lucide-react';
+import { deleteTestimonialAction } from './actions';
+import { DeleteActionButton } from '@/components/admin/delete-action-button';
 
 export const metadata: Metadata = { title: 'Testimonials — Admin' };
 
@@ -71,14 +73,22 @@ export default async function AdminTestimonialsPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Link
-                        href={`/admin/testimonials/${testimonial.id}`}
-                        className={buttonVariants({ variant: 'ghost', size: 'sm' })}
-                        title="Edit"
-                      >
-                        <Edit className="w-4 h-4" />
-                        <span className="sr-only">Edit</span>
-                      </Link>
+                      <div className="flex items-center justify-end gap-1">
+                        <Link
+                          href={`/admin/testimonials/${testimonial.id}`}
+                          className={buttonVariants({ variant: 'ghost', size: 'sm' })}
+                          title="Edit"
+                        >
+                          <Edit className="w-4 h-4" />
+                          <span className="sr-only">Edit</span>
+                        </Link>
+                        <DeleteActionButton
+                          id={testimonial.id}
+                          itemName={testimonial.author_name}
+                          itemType="testimonial"
+                          onDelete={deleteTestimonialAction}
+                        />
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))

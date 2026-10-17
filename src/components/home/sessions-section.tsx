@@ -8,31 +8,31 @@ const HARDCODED_SESSIONS = [
     slug: 'akashic-records',
     title: 'Akashic Records',
     image_url: '/images/session_akashic.jpg',
-    short_description: 'Insights for clarity and deeper self-understanding.',
+    short_description: 'A doorway into the deeper story of your experience. Explore patterns, relationships, recurring themes and questions beneath the surface.',
   },
   {
     slug: 'tarot',
     title: 'Tarot',
     image_url: '/images/session_tarot.jpg',
-    short_description: 'Reflective guidance for questions, decisions and life transitions.',
+    short_description: 'The cards don\u2019t decide your story. They help you look at it differently \u2014 an intuitive mirror for decisions and transitions.',
   },
   {
     slug: 'numerology',
     title: 'Numerology',
     image_url: '/images/session_numerology.jpg',
-    short_description: 'Explore the symbolic significance of numbers and personal cycles.',
+    short_description: 'Numbers carry their own language and symbolism. Explore your personal numbers and cycles to uncover patterns within your journey.',
   },
   {
     slug: 'spiritual-guidance',
     title: 'Spiritual Guidance',
     image_url: '/images/session_guidance.png',
-    short_description: 'A one-to-one space for reflection and intuitive guidance.',
+    short_description: 'Sometimes the most powerful shift begins with a conversation. A private, intuitive space to bring your questions and experiences.',
   },
   {
     slug: 'energy-healing',
     title: 'Energy & Healing',
     image_url: '/images/session_energy.jpg',
-    short_description: 'A calming practice focused on balance and wellbeing.',
+    short_description: 'A gentle practice for shifting, balancing and reconnecting. Create space to become more aware of your energy and restore balance.',
   },
 ];
 
@@ -44,7 +44,7 @@ export function SessionsSection({ services }: { services: ServiceRow[] }) {
       slug: def.slug,
       title: def.title,
       image_url: def.image_url,
-      short_description: fromDb?.short_description || def.short_description,
+      short_description: def.short_description || fromDb?.short_description,
     };
   });
 
@@ -52,24 +52,29 @@ export function SessionsSection({ services }: { services: ServiceRow[] }) {
     <section id="sessions" className="bg-[#0B0F1E] py-24 px-6 relative border-t border-white/[0.04]">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
-          <div>
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-12 gap-6">
+          <div className="max-w-2xl">
             <p
               className="text-xs tracking-[0.25em] uppercase font-mono font-medium mb-3"
               style={{ color: '#CFA56A' }}
             >
-              OUR SESSIONS
+              EXPLORE THE SESSIONS
             </p>
             <h2
               className="text-3xl sm:text-4xl lg:text-[2.6rem] text-[#F6F3EE] leading-[1.18]"
               style={{ fontFamily: 'var(--font-serif)' }}
             >
-              Explore the Sessions
+              Different Practices. Different Portals.<br className="hidden sm:inline" />
+              <span className="text-[#CFA56A] font-light"> One Journey &mdash; You.</span>
             </h2>
+            <p className="text-sm sm:text-[14.5px] text-[#BAC2D6] font-light leading-relaxed pt-3">
+              There is no single way to explore yourself. Sometimes the cards speak. Sometimes numbers reveal a pattern. Sometimes a conversation opens a door. And sometimes, simply looking at something from a different perspective changes everything. Choose what you&apos;re drawn to. Follow your curiosity. Begin wherever you feel called.
+            </p>
           </div>
 
-          <p className="text-xs tracking-[0.2em] uppercase font-mono text-[#8E9BB5]">
-            DIFFERENT PATHS. A DEEPER YOU.
+          <p className="text-xs tracking-[0.2em] uppercase font-mono text-[#CFA56A]/80 flex items-center gap-2">
+            <span>✦</span>
+            <span>DIFFERENT PORTALS &middot; ONE JOURNEY</span>
           </p>
         </div>
 

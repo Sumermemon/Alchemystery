@@ -18,9 +18,14 @@ interface EnquiryFormProps {
   availableSessions?: string[];
 }
 
-function EnquiryFormInner({ availableSessions = DEFAULT_SESSION_OPTIONS }: EnquiryFormProps) {
+function EnquiryFormInner({ availableSessions }: EnquiryFormProps) {
   const searchParams = useSearchParams();
   const sessionParam = searchParams.get('session');
+
+  const rawSessions = (availableSessions && availableSessions.length > 0)
+    ? availableSessions
+    : DEFAULT_SESSION_OPTIONS;
+  const sessions = Array.from(new Set(rawSessions));
 
   const [selectedSession, setSelectedSession] = useState<string>('');
   const [isPending, startTransition] = useTransition();
@@ -30,7 +35,7 @@ function EnquiryFormInner({ availableSessions = DEFAULT_SESSION_OPTIONS }: Enqui
   // Pre-select session from query param if provided
   useEffect(() => {
     if (sessionParam) {
-      const match = availableSessions.find(
+      const match = sessions.find(
         (s) => s.toLowerCase() === sessionParam.toLowerCase() ||
                s.toLowerCase().includes(sessionParam.toLowerCase())
       );
@@ -40,7 +45,7 @@ function EnquiryFormInner({ availableSessions = DEFAULT_SESSION_OPTIONS }: Enqui
         setSelectedSession(sessionParam);
       }
     }
-  }, [sessionParam, availableSessions]);
+  }, [sessionParam, sessions]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -215,16 +220,17 @@ function EnquiryFormInner({ availableSessions = DEFAULT_SESSION_OPTIONS }: Enqui
             name="session_type"
             value={selectedSession}
             onChange={(e) => setSelectedSession(e.target.value)}
-            className="w-full bg-transparent border-b border-[rgba(255,255,255,0.15)] py-3 text-[var(--color-ivory)] text-sm focus:outline-none focus:border-[var(--color-gold)] transition-colors appearance-none cursor-pointer"
+            style={{ colorScheme: 'dark' }}
+            className="w-full bg-[#0B0F1E] border-b border-[rgba(255,255,255,0.18)] py-3 text-[var(--color-ivory)] text-sm focus:outline-none focus:border-[var(--color-gold)] transition-colors appearance-none cursor-pointer pr-8"
           >
-            <option value="" style={{ backgroundColor: '#0b0f1e' }}>Select an offering…</option>
-            {availableSessions.map((opt) => (
-              <option key={opt} value={opt} style={{ backgroundColor: '#0b0f1e' }}>
+            <option value="" style={{ backgroundColor: '#0B0F1E', color: '#8E9BB5' }}>Select an offering…</option>
+            {sessions.map((opt) => (
+              <option key={opt} value={opt} style={{ backgroundColor: '#0B0F1E', color: '#F1EDE2' }}>
                 {opt}
               </option>
             ))}
           </select>
-          <span className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-xs text-[var(--color-muted)]">
+          <span className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-xs text-[var(--color-gold)] opacity-75">
             ▼
           </span>
         </div>

@@ -22,15 +22,24 @@ export function CtaSection() {
           <div className="flex items-center justify-center lg:justify-start gap-2 mb-4">
             <span className="text-[#CFA56A] text-xs animate-star-twinkle">✦</span>
             <p className="text-xs font-mono tracking-[0.25em] uppercase text-[#CFA56A]">
-              BEGIN YOUR JOURNEY
+              CLARITY &middot; HEALING &middot; ALIGNMENT
             </p>
           </div>
-          <h2 className="text-4xl md:text-5xl mb-6 leading-[1.2]" style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-ivory)' }}>
-            Perhaps This Is Your Time to Pause
+          <h2 className="text-3xl sm:text-4xl md:text-5xl mb-6 leading-[1.2]" style={{ fontFamily: 'var(--font-serif)', color: 'var(--color-ivory)' }}>
+            Perhaps You&apos;re Being Called<br className="hidden sm:inline" />
+            <span className="text-[#CFA56A] font-light"> to Look a Little Closer.</span>
           </h2>
-          <p className="text-[var(--color-slate-muted)] text-lg mb-10 font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-            Explore a session, ask a question, or simply begin a conversation. A safe space for clarity and grounded alignment.
-          </p>
+          <div className="text-[var(--color-slate-muted)] text-base sm:text-lg mb-10 font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed space-y-3">
+            <p>
+              You don&apos;t have to know exactly what you&apos;re looking for. You don&apos;t have to believe in anything.
+            </p>
+            <p>
+              Sometimes, all it takes is curiosity &mdash; and the willingness to see yourself, your circumstances and your possibilities from a different perspective.
+            </p>
+            <p className="text-[#F6F3EE] font-serif italic text-lg sm:text-xl pt-1">
+              Come with a question. Come with curiosity. Or simply come as you are.
+            </p>
+          </div>
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-5">
             <Link 
               href="/sessions"

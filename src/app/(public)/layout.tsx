@@ -142,7 +142,7 @@ export default async function PublicLayout({
             </div>
             <div className="text-center sm:text-right text-[11px] space-y-0.5 font-sans opacity-70">
               <p>© {new Date().getFullYear()} {settings.brand_name || 'Alchemystery'}. All rights reserved.</p>
-              <p className="italic font-serif text-[12px] text-[var(--color-gold)] opacity-80">{settings.tagline || 'Your journey. Your truth.'}</p>
+              <p className="italic font-serif text-[12px] text-[var(--color-gold)] opacity-80">{settings.tagline || 'Clarity \u00B7 Healing \u00B7 Alignment'}</p>
             </div>
           </div>
         </div>

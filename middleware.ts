@@ -53,7 +53,15 @@ export async function middleware(request: NextRequest) {
   });
 
   // Refresh the session — must happen before any redirect logic
-  const { data: { user } } = await supabase.auth.getUser();
+  let user = null;
+  try {
+    const { data } = await supabase.auth.getUser();
+    user = data.user;
+  } catch (err) {
+    // If Supabase is unreachable or paused (e.g. Cloudflare 521),
+    // treat user as unauthenticated rather than crashing the request
+    user = null;
+  }
 
   // Protect all /admin routes except /admin/login
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {

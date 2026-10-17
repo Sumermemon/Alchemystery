@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select } from '@/components/ui/select';
 import { STATUS } from '@/constants/status';
+import { useToast } from '@/components/ui/toast';
 
 interface TestimonialFormProps {
   initialData?: TestimonialRow;
@@ -17,6 +18,7 @@ interface TestimonialFormProps {
 
 export function TestimonialForm({ initialData }: TestimonialFormProps) {
   const router = useRouter();
+  const { success: showSuccess, error: showError } = useToast();
   const [isPending, setIsPending] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   
@@ -41,11 +43,19 @@ export function TestimonialForm({ initialData }: TestimonialFormProps) {
     try {
       if (isEditing) {
         await updateTestimonialAction(initialData.id, payload);
+        showSuccess('Testimonial Updated', 'Client reflection saved successfully.');
+        router.refresh();
       } else {
         await createTestimonialAction(payload);
+        showSuccess('Testimonial Created', 'New reflection added.');
+        router.push('/admin/testimonials');
+        router.refresh();
       }
     } catch (err: any) {
-      setError(err.message || 'An error occurred while saving.');
+      const msg = err.message || 'An error occurred while saving.';
+      setError(msg);
+      showError('Save Failed', msg);
+    } finally {
       setIsPending(false);
     }
   }
@@ -56,9 +66,14 @@ export function TestimonialForm({ initialData }: TestimonialFormProps) {
     setIsPending(true);
     try {
       await deleteTestimonialAction(initialData.id);
+      showSuccess('Testimonial Deleted', 'The testimonial has been removed.');
       router.push('/admin/testimonials');
+      router.refresh();
     } catch (err: any) {
-      setError(err.message || 'An error occurred while deleting.');
+      const msg = err.message || 'An error occurred while deleting.';
+      setError(msg);
+      showError('Delete Failed', msg);
+    } finally {
       setIsPending(false);
     }
   }

@@ -5,22 +5,27 @@ export function StepsSection() {
     {
       num: '01',
       title: 'Choose',
-      desc: 'Explore the sessions and select what resonates with you.',
+      desc: 'Follow your curiosity and choose the practice that feels right for you.',
     },
     {
       num: '02',
       title: 'Book',
-      desc: 'Schedule your session at a convenient time.',
+      desc: 'Choose a time and settle into a space where you feel comfortable.',
     },
     {
       num: '03',
       title: 'Connect',
-      desc: 'Join online from a quiet, comfortable space.',
+      desc: 'Join your private online session and arrive exactly as you are.',
     },
     {
       num: '04',
-      title: 'Reflect',
-      desc: 'Leave with insights, perspective and a renewed sense of clarity.',
+      title: 'Explore',
+      desc: 'Ask questions, share what you\u2019re experiencing and explore what the practice reveals.',
+    },
+    {
+      num: '05',
+      title: 'Take What Resonates',
+      desc: 'Keep what feels meaningful, leave what doesn\u2019t, and take your own next step.',
     },
   ];
 
@@ -30,10 +35,10 @@ export function StepsSection() {
       className="text-[#1A1F2C] py-20 px-6 border-t border-[#A37D42]/20"
       style={{ backgroundColor: '#F1EDE2' }}
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+      <div className="max-w-7xl mx-auto space-y-12">
         
-        {/* Left Column — Header */}
-        <div className="lg:col-span-4 space-y-3">
+        {/* Header Block */}
+        <div className="max-w-2xl space-y-2.5">
           <p className="text-[#A37D42] text-xs tracking-[0.25em] uppercase font-mono font-semibold">
             HOW A SESSION WORKS
           </p>
@@ -41,17 +46,20 @@ export function StepsSection() {
             className="text-3xl sm:text-4xl lg:text-[2.6rem] leading-[1.15]"
             style={{ fontFamily: 'var(--font-serif)', color: '#1A1F2C' }}
           >
-            Your Session,<br />Your Space
+            Your Session. Your Space.
           </h2>
+          <p className="text-sm sm:text-[15px] text-[#555C6E] leading-relaxed font-light">
+            No expectations. No judgement. No need to have everything figured out.
+          </p>
         </div>
 
-        {/* Right Column — 4 Steps Horizontal Layout with Dividers */}
-        <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0">
+        {/* 5 Steps Horizontal / Responsive Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-0">
           {steps.map((step, idx) => (
             <div
               key={step.num}
               className={`flex flex-col space-y-2.5 ${
-                idx > 0 ? 'lg:border-l lg:border-[#A37D42]/25 lg:pl-6 xl:pl-8' : ''
+                idx > 0 ? 'lg:border-l lg:border-[#A37D42]/25 lg:pl-5 xl:pl-6' : ''
               }`}
             >
               {/* Header with Star and Number */}
@@ -64,7 +72,7 @@ export function StepsSection() {
 
               {/* Title */}
               <h3
-                className="text-lg font-medium text-[#1A1F2C]"
+                className="text-base sm:text-lg font-medium text-[#1A1F2C]"
                 style={{ fontFamily: 'var(--font-serif)' }}
               >
                 {step.title}

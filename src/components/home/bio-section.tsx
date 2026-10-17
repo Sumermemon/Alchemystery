@@ -38,14 +38,17 @@ export function BioSection() {
               className="text-3xl sm:text-4xl lg:text-[2.65rem] leading-[1.14] text-[#1A1F2C]"
               style={{ fontFamily: 'var(--font-serif)' }}
             >
-              A Journey of Service<br />and Self-Discovery
+              A Journey That Began<br />With Curiosity
             </h2>
-            <div className="space-y-4 text-[#555C6E] text-sm sm:text-[14.5px] leading-relaxed max-w-md">
+            <div className="space-y-3.5 text-[#555C6E] text-sm sm:text-[14.5px] leading-relaxed max-w-md">
               <p>
-                I&apos;m Isha Singasane, and Alchemystery is an extension of my deep passion for intuitive wisdom, spiritual exploration and human connection.
+                I&apos;m Isha Singasane, and Alchemystery is an extension of a journey that began quite simply &mdash; with curiosity. I didn&apos;t come to spirituality through a formal initiation or a predetermined path. It began with questions about life, patterns, and what exists beneath what we can immediately see.
               </p>
               <p>
-                My work is about holding space — for your questions, insights, transitions and inner growth. I work with compassion, integrity and a grounded approach.
+                A space where you don&apos;t need to arrive with the right beliefs, the right questions or any answers at all. You can simply arrive as yourself.
+              </p>
+              <p className="text-[#1A1F2C] font-medium">
+                My role isn&apos;t to predict your life or decide what you should do &mdash; it&apos;s to hold a safe, open and judgment-free space to explore what is present and see what might be possible.
               </p>
             </div>
             <div className="pt-2">
@@ -91,17 +94,17 @@ export function BioSection() {
                 Isha Singasane
               </p>
               <p className="text-[#A37D42] text-[10px] tracking-[0.25em] uppercase font-mono font-semibold pt-1">
-                FOUNDER &amp; SPIRITUAL PRACTITIONER
+                FOUNDER &middot; SPIRITUAL PRACTITIONER
               </p>
             </div>
 
             {/* Editorial Wisdom Quote */}
             <div className="space-y-4">
               <p 
-                className="text-lg sm:text-xl italic leading-relaxed text-[#1A1F2C]" 
+                className="text-base sm:text-lg italic leading-relaxed text-[#1A1F2C]" 
                 style={{ fontFamily: 'var(--font-serif)' }}
               >
-                &ldquo;True wisdom is not found outside, but remembered within.&rdquo;
+                &ldquo;I didn&apos;t come to this with an introduction. I came to it with curiosity &mdash; about life, about people, and about the many ways we experience the world.&rdquo;
               </p>
               <div className="w-10 h-[1.5px] bg-[#A37D42] opacity-80" />
             </div>

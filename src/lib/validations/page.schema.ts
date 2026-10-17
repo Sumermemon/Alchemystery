@@ -26,5 +26,13 @@ export const pageSectionSchema = z.object({
   metadata: z.record(z.string(), z.unknown()).nullable().optional(),
 });
 
+export const pageWithContentSchema = pageSchema.extend({
+  section_heading: z.string().max(300).nullable().optional(),
+  section_body: z.string().nullable().optional(),
+  section_cta_label: z.string().max(100).nullable().optional(),
+  section_cta_url: z.string().max(500).nullable().optional(),
+});
+
 export type PageFormData = z.infer<typeof pageSchema>;
 export type PageSectionFormData = z.infer<typeof pageSectionSchema>;
+export type PageWithContentFormData = z.infer<typeof pageWithContentSchema>;

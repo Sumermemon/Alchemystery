@@ -38,7 +38,20 @@ export default async function ConnectPage() {
     getSiteSettings(),
   ]);
 
-  const availableSessionTitles = services.map((s) => s.title);
+  const defaultOfferings = [
+    { id: 'offering-1', slug: 'akashic-records', title: 'Akashic Records' },
+    { id: 'offering-2', slug: 'tarot', title: 'Tarot' },
+    { id: 'offering-3', slug: 'numerology', title: 'Numerology' },
+    { id: 'offering-4', slug: 'spiritual-guidance', title: 'Spiritual Guidance' },
+    { id: 'offering-5', slug: 'energy-healing', title: 'Energy & Healing' },
+  ];
+
+  const activeOfferings = services.length > 0 ? services : defaultOfferings;
+
+  const availableSessionTitles = [
+    ...activeOfferings.map((s) => s.title),
+    'General Inquiry / Not Sure Yet',
+  ];
   // Prefer dedicated whatsapp number, fall back to contact_phone
   const whatsappNumber = (settings.whatsapp as string) || (settings.contact_phone as string) || '';
   const cleanPhone = whatsappNumber.replace(/[^0-9]/g, '');
@@ -156,7 +169,7 @@ export default async function ConnectPage() {
                 Active Offerings
               </h3>
               <div className="flex flex-wrap gap-2">
-                {services.map((s) => (
+                {activeOfferings.map((s) => (
                   <Link
                     key={s.id}
                     href={`/sessions/${s.slug}`}

@@ -68,7 +68,7 @@ export function HeroSection() {
           <circle cx="280" cy="270" r="190" stroke="currentColor" strokeWidth="1" strokeDasharray="2 4" opacity="0.5" />
           <circle cx="280" cy="270" r="160" stroke="currentColor" strokeWidth="1.2" opacity="0.75" />
           <circle cx="280" cy="270" r="100" stroke="currentColor" strokeWidth="0.8" opacity="0.4" />
-          
+
           {/* Vertical Celestial Axis with Planetary Alignment Nodes */}
           <line x1="280" y1="20" x2="280" y2="560" stroke="currentColor" strokeWidth="1.2" opacity="0.75" />
           <circle cx="280" cy="80" r="3.5" fill="currentColor" />
@@ -115,8 +115,8 @@ export function HeroSection() {
       {/* Hero Content Container */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         {/* Left Column — Headings & Actions */}
-        <div className="lg:col-span-8 space-y-8">
-          {/* Subtitle tag */}
+        <div className="lg:col-span-8 space-y-6 sm:space-y-7">
+          {/* Eyebrow tag */}
           <div className="flex items-center gap-2">
             <span className="text-[#CFA56A] text-xs animate-star-twinkle">✦</span>
             <p
@@ -129,20 +129,28 @@ export function HeroSection() {
 
           {/* Main Headline */}
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.2rem] text-[#F6F3EE] leading-[1.12] sm:leading-[1.08] tracking-tight drop-shadow-md"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.2rem] text-[#F6F3EE] leading-[1.14] sm:leading-[1.1] tracking-tight drop-shadow-md"
             style={{ fontFamily: 'var(--font-serif)' }}
           >
-            A Space for<br />
-            Your Inner Truth
+            A Space to Know Yourself<br className="hidden sm:inline" />
+            <span className="text-[#CFA56A] font-light"> — and the Energy Around You</span>
           </h1>
 
-          {/* Descriptive copy */}
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-[#BAC2D6] max-w-xl font-light leading-relaxed">
-            Alchemystery brings together intuitive and spiritual practices to help you explore life&apos;s questions with greater awareness and perspective.
-          </p>
+          {/* Descriptive copy in 3 thoughtful, breathing paragraphs */}
+          <div className="space-y-3.5 text-sm sm:text-base text-[#BAC2D6] max-w-2xl font-light leading-relaxed">
+            <p>
+              Everything is energy. Our thoughts, emotions, experiences, relationships and the spaces we move through all carry their own energy &mdash; and energy can shift, move and be transmuted.
+            </p>
+            <p>
+              Alchemystery is a safe, welcoming space to explore yourself, your experiences and the energies that shape your life &mdash; without judgment.
+            </p>
+            <p className="text-[#F1EDE2]/90">
+              Through intuitive and spiritual practices, we create space for awareness, perspective and the possibility of meaningful change.
+            </p>
+          </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-5 pt-2">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-5 pt-1">
             <Link
               href="/sessions"
               className="group relative inline-flex items-center justify-center gap-2 px-7 sm:px-8 py-3.5 sm:py-4 rounded text-xs font-semibold tracking-[0.16em] uppercase text-[#0B0F1E] transition-all duration-300 hover:brightness-110 shadow-lg overflow-hidden"
@@ -165,11 +173,26 @@ export function HeroSection() {
             </Link>
           </div>
 
-          {/* Footer note */}
-          <p className="text-[11px] tracking-[0.22em] uppercase text-[#8E9BB5] pt-2 font-mono flex items-center gap-2">
+          {/* Online Sessions Badge */}
+          <p className="text-[11px] tracking-[0.22em] uppercase text-[#8E9BB5] pt-1 font-mono flex items-center gap-2">
             <span style={{ color: '#CFA56A' }} className="animate-star-twinkle">✦</span>
             <span>ONLINE SESSIONS &middot; BY APPOINTMENT</span>
           </p>
+
+          {/* Three Pillars / Bottom Chips */}
+          <div className="pt-3 border-t border-white/[0.08] flex flex-wrap items-center gap-2.5 sm:gap-4 text-[10.5px] sm:text-xs font-mono tracking-[0.18em] uppercase text-[#CFA56A]">
+            <span className="px-3 py-1.5 rounded-full bg-[#CFA56A]/10 border border-[#CFA56A]/25 backdrop-blur-sm">
+              KNOW YOURSELF
+            </span>
+            <span className="text-white/20 hidden sm:inline">&bull;</span>
+            <span className="px-3 py-1.5 rounded-full bg-[#CFA56A]/10 border border-[#CFA56A]/25 backdrop-blur-sm">
+              UNDERSTAND YOUR ENERGY
+            </span>
+            <span className="text-white/20 hidden sm:inline">&bull;</span>
+            <span className="px-3 py-1.5 rounded-full bg-[#CFA56A]/10 border border-[#CFA56A]/25 backdrop-blur-sm">
+              CREATE POSITIVE CHANGE
+            </span>
+          </div>
         </div>
       </div>
     </section>

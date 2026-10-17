@@ -13,6 +13,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Edit, Plus } from 'lucide-react';
+import { deleteFaqAction } from './actions';
+import { DeleteActionButton } from '@/components/admin/delete-action-button';
 
 export const metadata: Metadata = { title: 'FAQs — Admin' };
 
@@ -71,14 +73,22 @@ export default async function AdminFaqsPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Link
-                        href={`/admin/faqs/${faq.id}`}
-                        className={buttonVariants({ variant: 'ghost', size: 'sm' })}
-                        title="Edit"
-                      >
-                        <Edit className="w-4 h-4" />
-                        <span className="sr-only">Edit</span>
-                      </Link>
+                      <div className="flex items-center justify-end gap-1">
+                        <Link
+                          href={`/admin/faqs/${faq.id}`}
+                          className={buttonVariants({ variant: 'ghost', size: 'sm' })}
+                          title="Edit"
+                        >
+                          <Edit className="w-4 h-4" />
+                          <span className="sr-only">Edit</span>
+                        </Link>
+                        <DeleteActionButton
+                          id={faq.id}
+                          itemName={faq.question}
+                          itemType="faq"
+                          onDelete={deleteFaqAction}
+                        />
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))

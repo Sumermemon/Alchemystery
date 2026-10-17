@@ -24,20 +24,41 @@ export default function LoginForm() {
     setError(null);
     setLoading(true);
 
-    const supabase = createClient();
-    const { error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const supabase = createClient();
+      const { error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (authError) {
-      setError('Invalid email or password.');
+      if (authError) {
+        console.error('Login error:', authError);
+        const msg = authError.message?.toLowerCase() || '';
+        if (
+          msg.includes('fetch') ||
+          msg.includes('network') ||
+          msg.includes('failed to fetch') ||
+          (authError.status && authError.status >= 500)
+        ) {
+          setError(
+            'Supabase server unreachable (Cloudflare 521 / fetch failed). The remote Supabase project is paused or offline. Please unpause it at supabase.com to log in.'
+          );
+        } else {
+          setError('Invalid email or password.');
+        }
+        setLoading(false);
+        return;
+      }
+
+      router.push(redirectTo);
+      router.refresh();
+    } catch (err: unknown) {
+      console.error('Login exception:', err);
+      setError(
+        'Connection error: Unable to reach database server (Cloudflare 521 / fetch failed). Please unpause your Supabase project in the Supabase dashboard.'
+      );
       setLoading(false);
-      return;
     }
-
-    router.push(redirectTo);
-    router.refresh();
   }
 
   return (

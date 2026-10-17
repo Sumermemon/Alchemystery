@@ -88,13 +88,13 @@ export default async function AboutPage() {
               </p>
 
               <blockquote
-                className="pl-6 italic text-[var(--color-ivory)] text-xl leading-relaxed"
+                className="pl-6 italic text-[var(--color-ivory)] text-lg sm:text-xl leading-relaxed"
                 style={{
                   borderLeft: '2px solid var(--color-gold)',
                   fontFamily: 'var(--font-serif)',
                 }}
               >
-                &ldquo;My sessions are not about predictions. They are about perspective.&rdquo;
+                &ldquo;I didn&apos;t come to this with an introduction. I came to it with curiosity &mdash; about life, about people, and about the many ways we experience the world.&rdquo;
               </blockquote>
 
               <div className="flex gap-4 flex-wrap">
@@ -190,21 +190,18 @@ export default async function AboutPage() {
         </div>
 
         {/* Long bio */}
-        <div className="max-w-3xl mx-auto space-y-6 text-[var(--color-muted)] leading-relaxed">
+        <div className="max-w-3xl mx-auto space-y-6 text-[var(--color-muted)] text-base sm:text-lg leading-relaxed font-light">
           <p>
-            Isha's work is grounded in deep listening and genuine care. She creates a space
-            where you can feel safe to explore, reflect and reconnect with the wisdom
-            already present within you.
+            Isha didn&apos;t come to spirituality through a formal initiation or a predetermined path. There wasn&apos;t a particular moment when she decided this was what she was meant to do &mdash; it began simply with questions.
           </p>
           <p>
-            Her approach draws from years of personal study and practice across multiple
-            traditions, combined with a natural intuitive sensitivity that clients often
-            describe as calming and clarifying.
+            Why do we experience life the way we do? Why do certain patterns keep appearing? What shapes the way we think, feel, connect and make our choices? And what exists beneath what we can immediately see, understand or explain?
           </p>
           <p>
-            Sessions are conducted online and are available worldwide. Isha works with a
-            small number of clients at any time to ensure each session receives her full
-            presence and attention.
+            The more she explored different traditions and intuitive practices, the more she began to see life through a distinct lens: that everything is energy, that energy is constantly moving, and that what feels fixed may not always be fixed.
+          </p>
+          <p className="text-[#F1EDE2]">
+            Her role isn&apos;t to tell you who you are, predict your life or decide what you should do. It&apos;s to hold a safe, open and judgment-free space where we can explore what is present, understand it from a different perspective and see what might be possible.
           </p>
         </div>
       </section>

@@ -18,20 +18,25 @@ import type { ProfileRow } from '@/types/database.types';
  * Used in server components and server actions.
  */
 export async function getCurrentUser(): Promise<AuthUser | null> {
-  const supabase = await createClient();
+  try {
+    const supabase = await createClient();
 
-  const { data: { user }, error: authError } = await supabase.auth.getUser();
-  if (authError || !user) return null;
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) return null;
 
-  const { data: profile, error: profileError } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', user.id)
-    .single();
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', user.id)
+      .single();
 
-  if (profileError || !profile) return null;
+    if (profileError || !profile) return null;
 
-  return { supabaseUser: user, profile };
+    return { supabaseUser: user, profile };
+  } catch (err) {
+    console.warn('[auth.service] getCurrentUser network or fetch error:', err);
+    return null;
+  }
 }
 
 /**
@@ -40,10 +45,15 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
  * Returns the AuthUser if verified, null otherwise.
  */
 export async function requireSuperAdmin(): Promise<AuthUser | null> {
-  const authUser = await getCurrentUser();
-  if (!authUser) return null;
-  if (authUser.profile.role !== ROLES.SUPER_ADMIN) return null;
-  return authUser;
+  try {
+    const authUser = await getCurrentUser();
+    if (!authUser) return null;
+    if (authUser.profile.role !== ROLES.SUPER_ADMIN) return null;
+    return authUser;
+  } catch (err) {
+    console.warn('[auth.service] requireSuperAdmin error:', err);
+    return null;
+  }
 }
 
 /**
@@ -54,24 +64,36 @@ export async function signInWithEmail(
   email: string,
   password: string,
 ): Promise<AuthResult<{ userId: string }>> {
-  const supabase = await createClient();
+  try {
+    const supabase = await createClient();
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-  if (error) {
-    return { success: false, error: 'Invalid email or password.' };
+    if (error) {
+      return { success: false, error: 'Invalid email or password.' };
+    }
+
+    return { success: true, data: { userId: data.user.id } };
+  } catch (err) {
+    console.error('[auth.service] signInWithEmail error:', err);
+    return {
+      success: false,
+      error: 'Unable to connect to authentication server. Please check database status.',
+    };
   }
-
-  return { success: true, data: { userId: data.user.id } };
 }
 
 /** Signs out the current user */
 export async function signOut(): Promise<void> {
-  const supabase = await createClient();
-  await supabase.auth.signOut();
+  try {
+    const supabase = await createClient();
+    await supabase.auth.signOut();
+  } catch (err) {
+    console.warn('[auth.service] signOut error:', err);
+  }
 }
 
 /**
@@ -79,15 +101,20 @@ export async function signOut(): Promise<void> {
  * Used after sign-up to confirm profile creation by the DB trigger.
  */
 export async function getProfileById(userId: string): Promise<ProfileRow | null> {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', userId)
-    .single();
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .single();
 
-  if (error) return null;
-  return data;
+    if (error) return null;
+    return data;
+  } catch (err) {
+    console.warn('[auth.service] getProfileById error:', err);
+    return null;
+  }
 }
 
 // Adding a temporary debug log function for requireSuperAdmin

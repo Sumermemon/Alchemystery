@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { EnquiryRow, EnquiryStatus } from '@/types/database.types';
 import { updateEnquiryStatusAction, deleteEnquiryAction } from '../actions';
+import { useToast } from '@/components/ui/toast';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { 
   ArrowLeft, 
@@ -25,14 +26,20 @@ interface EnquiryDetailClientProps {
 
 export default function EnquiryDetailClient({ enquiry }: EnquiryDetailClientProps) {
   const router = useRouter();
+  const { success: showSuccess, error: showError } = useToast();
   const [isPending, startTransition] = useTransition();
   const [currentStatus, setCurrentStatus] = useState<EnquiryStatus>(enquiry.status);
 
   const handleStatusChange = (status: EnquiryStatus) => {
     setCurrentStatus(status);
     startTransition(async () => {
-      await updateEnquiryStatusAction(enquiry.id, status);
-      router.refresh();
+      try {
+        await updateEnquiryStatusAction(enquiry.id, status);
+        showSuccess('Status Updated', `Enquiry marked as "${status}".`);
+        router.refresh();
+      } catch (err: any) {
+        showError('Update Failed', err?.message || 'Could not update status');
+      }
     });
   };
 
@@ -41,7 +48,14 @@ export default function EnquiryDetailClient({ enquiry }: EnquiryDetailClientProp
       return;
     }
     startTransition(async () => {
-      await deleteEnquiryAction(enquiry.id, true);
+      try {
+        await deleteEnquiryAction(enquiry.id, false);
+        showSuccess('Enquiry Deleted', 'The enquiry has been removed.');
+        router.push('/admin/enquiries');
+        router.refresh();
+      } catch (err: any) {
+        showError('Delete Failed', err?.message || 'Could not delete enquiry');
+      }
     });
   };
 

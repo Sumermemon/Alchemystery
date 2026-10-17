@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getPageById } from '@/lib/repositories/page.repository';
+import { getPageById, getSectionsByPageId } from '@/lib/repositories/page.repository';
 import { PageForm } from '../page-form';
 
 export const metadata: Metadata = { title: 'Edit Page — Admin' };
@@ -12,6 +12,9 @@ export default async function EditPagePage({ params }: { params: Promise<{ id: s
   if (!page) {
     notFound();
   }
+
+  const sections = await getSectionsByPageId(id);
+  const initialSection = sections.find((s) => s.section_key === 'main') || sections[0] || null;
 
   return (
     <div className="space-y-6">
@@ -28,7 +31,7 @@ export default async function EditPagePage({ params }: { params: Promise<{ id: s
           boxShadow: 'var(--admin-card-shadow)',
         }}
       >
-        <PageForm initialData={page} />
+        <PageForm initialData={page} initialSection={initialSection} />
       </div>
     </div>
   );

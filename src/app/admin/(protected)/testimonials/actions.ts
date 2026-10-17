@@ -18,7 +18,7 @@ export async function createTestimonialAction(data: TestimonialFormData) {
   await createTestimonial({ ...parsed.data, author_initials: parsed.data.author_initials ?? null, service_id: parsed.data.service_id ?? null });
   revalidatePath('/admin/testimonials');
   revalidatePath('/');
-  redirect('/admin/testimonials');
+  return { success: true };
 }
 
 export async function updateTestimonialAction(id: string, data: TestimonialFormData) {
@@ -33,7 +33,7 @@ export async function updateTestimonialAction(id: string, data: TestimonialFormD
   await updateTestimonial({ id, ...parsed.data, author_initials: parsed.data.author_initials ?? null, service_id: parsed.data.service_id ?? null });
   revalidatePath('/admin/testimonials');
   revalidatePath('/');
-  redirect('/admin/testimonials');
+  return { success: true };
 }
 
 export async function deleteTestimonialAction(id: string) {
@@ -43,4 +43,5 @@ export async function deleteTestimonialAction(id: string) {
   await deleteTestimonial(id);
   revalidatePath('/admin/testimonials');
   revalidatePath('/');
+  return { success: true };
 }

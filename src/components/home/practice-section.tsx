@@ -62,16 +62,27 @@ export function PracticeSection() {
                 className="text-2xl sm:text-3xl lg:text-[2.6rem] leading-[1.18] sm:leading-[1.15]"
                 style={{ fontFamily: 'var(--font-serif)', color: '#1A1F2C' }}
               >
-                Guidance for a<br />
-                More Conscious Life
+                Everything Is Energy.<br />
+                Everything Can Shift.
               </h2>
             </div>
           </div>
 
           {/* Description Copy */}
-          <p className="text-sm sm:text-[15px] leading-relaxed text-[#555C6E] max-w-lg pt-1">
-            Alchemystery is a space for reflection, insight and inner alignment. Through ancient wisdom and intuitive practices, we explore what truly matters — with openness, compassion and a grounded approach.
-          </p>
+          <div className="space-y-3 text-sm sm:text-[14.5px] leading-relaxed text-[#555C6E] max-w-xl pt-1">
+            <p>
+              There are moments in life when something simply feels different. A pattern keeps repeating. A relationship feels heavy. A decision doesn&apos;t feel clear. Or perhaps you just sense that you&apos;re ready for something new.
+            </p>
+            <p className="italic text-[#1A1F2C]/80 font-serif text-[15px]">
+              We don&apos;t always need to know exactly why.
+            </p>
+            <p>
+              Sometimes we just need a space to become aware of what we&apos;re carrying, understand what it may be showing us, and see what might be possible from here. At Alchemystery, intuitive and spiritual practices become tools for that exploration.
+            </p>
+            <p className="text-[#1A1F2C] font-medium pt-0.5">
+              Because when we understand ourselves &mdash; and the energy around us &mdash; we can begin to consciously work with it rather than simply move through it.
+            </p>
+          </div>
 
           {/* Action Link (Title case matching screenshot 2) */}
           <div className="pt-2">
@@ -118,11 +129,11 @@ export function PracticeSection() {
                 <circle cx="42" cy="24" r="0.75" fill="currentColor" />
               </svg>
             </div>
-            <h3 className="text-lg font-medium" style={{ fontFamily: 'var(--font-serif)', color: '#1A1F2C' }}>
-              Clarity
+            <h3 className="text-lg font-medium tracking-wide uppercase font-mono" style={{ color: '#A37D42' }}>
+              CLARITY
             </h3>
             <p className="text-xs sm:text-[13px] leading-relaxed text-[#555C6E] max-w-xs sm:max-w-none">
-              Create space to understand what you&apos;re experiencing.
+              Bring awareness to what you&apos;re experiencing and see beneath the surface.
             </p>
           </div>
 
@@ -143,11 +154,11 @@ export function PracticeSection() {
                 />
               </svg>
             </div>
-            <h3 className="text-lg font-medium" style={{ fontFamily: 'var(--font-serif)', color: '#1A1F2C' }}>
-              Perspective
+            <h3 className="text-lg font-medium tracking-wide uppercase font-mono" style={{ color: '#A37D42' }}>
+              PERSPECTIVE
             </h3>
             <p className="text-xs sm:text-[13px] leading-relaxed text-[#555C6E] max-w-xs sm:max-w-none">
-              Explore patterns, questions and possibilities.
+              Explore patterns, possibilities and the energies influencing your present.
             </p>
           </div>
 
@@ -176,11 +187,11 @@ export function PracticeSection() {
                 <path d="M18 36 C21 38 27 38 30 36" strokeLinecap="round" />
               </svg>
             </div>
-            <h3 className="text-lg font-medium" style={{ fontFamily: 'var(--font-serif)', color: '#1A1F2C' }}>
-              Alignment
+            <h3 className="text-lg font-medium tracking-wide uppercase font-mono" style={{ color: '#A37D42' }}>
+              ALIGNMENT
             </h3>
             <p className="text-xs sm:text-[13px] leading-relaxed text-[#555C6E] max-w-xs sm:max-w-none">
-              Reconnect with what feels meaningful and intentional.
+              Move towards choices, relationships and experiences that feel more in tune with who you are.
             </p>
           </div>
 

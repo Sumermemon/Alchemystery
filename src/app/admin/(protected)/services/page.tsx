@@ -13,6 +13,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Edit, Sparkles } from 'lucide-react';
+import { deleteServiceAction } from './actions';
+import { DeleteActionButton } from '@/components/admin/delete-action-button';
 
 export const metadata: Metadata = { title: 'Services — Admin' };
 
@@ -74,14 +76,22 @@ export default async function AdminServicesPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Link
-                        href={`/admin/services/${service.id}`}
-                        className={buttonVariants({ variant: 'ghost', size: 'sm' })}
-                        title="Edit"
-                      >
-                        <Edit className="w-4 h-4" />
-                        <span className="sr-only">Edit</span>
-                      </Link>
+                      <div className="flex items-center justify-end gap-1">
+                        <Link
+                          href={`/admin/services/${service.id}`}
+                          className={buttonVariants({ variant: 'ghost', size: 'sm' })}
+                          title="Edit"
+                        >
+                          <Edit className="w-4 h-4" />
+                          <span className="sr-only">Edit</span>
+                        </Link>
+                        <DeleteActionButton
+                          id={service.id}
+                          itemName={service.title}
+                          itemType="service"
+                          onDelete={deleteServiceAction}
+                        />
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))

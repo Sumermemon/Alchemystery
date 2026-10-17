@@ -14,6 +14,8 @@ import {
 } from '@/components/ui/table';
 import { Edit, PenTool } from 'lucide-react';
 import { format } from 'date-fns';
+import { deleteBlogPostAction } from './actions';
+import { DeleteActionButton } from '@/components/admin/delete-action-button';
 
 export const metadata: Metadata = { title: 'Blog Posts — Admin' };
 
@@ -77,14 +79,22 @@ export default async function AdminBlogPage() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Link
-                        href={`/admin/blog/${post.id}`}
-                        className={buttonVariants({ variant: 'ghost', size: 'sm' })}
-                        title="Edit"
-                      >
-                        <Edit className="w-4 h-4" />
-                        <span className="sr-only">Edit</span>
-                      </Link>
+                      <div className="flex items-center justify-end gap-1">
+                        <Link
+                          href={`/admin/blog/${post.id}`}
+                          className={buttonVariants({ variant: 'ghost', size: 'sm' })}
+                          title="Edit"
+                        >
+                          <Edit className="w-4 h-4" />
+                          <span className="sr-only">Edit</span>
+                        </Link>
+                        <DeleteActionButton
+                          id={post.id}
+                          itemName={post.title}
+                          itemType="blog post"
+                          onDelete={deleteBlogPostAction}
+                        />
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))

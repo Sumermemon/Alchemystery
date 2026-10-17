@@ -82,41 +82,51 @@ const CONFIG: Record<ToastType, { icon: React.ElementType; accent: string; bg: s
   info:    { icon: Info,         accent: '#3b82f6', bg: 'rgba(59,130,246,0.08)',  border: 'rgba(59,130,246,0.3)',  text: '#93c5fd' },
 };
 
+import { createPortal } from 'react-dom';
+
 function ToastContainer({ toasts, onDismiss }: { toasts: Toast[]; onDismiss: (id: string) => void }) {
-  return (
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || typeof document === 'undefined') return null;
+
+  return createPortal(
     <div
       aria-live="polite"
       aria-label="Notifications"
       style={{
         position: 'fixed',
-        bottom: '24px',
+        top: '24px',
         right: '24px',
-        zIndex: 99999,
+        zIndex: 9999999,
         display: 'flex',
         flexDirection: 'column',
-        gap: '10px',
-        maxWidth: '380px',
-        width: '100%',
+        gap: '12px',
+        maxWidth: '400px',
+        width: 'calc(100vw - 48px)',
         pointerEvents: 'none',
       }}
     >
       {toasts.map((t) => (
         <ToastItem key={t.id} toast={t} onDismiss={onDismiss} />
       ))}
-    </div>
+    </div>,
+    document.body
   );
 }
 
 function ToastItem({ toast: t, onDismiss }: { toast: Toast; onDismiss: (id: string) => void }) {
-  const [visible, setVisible] = React.useState(false);
+  const [closing, setClosing] = React.useState(false);
   const cfg = CONFIG[t.type];
   const Icon = cfg.icon;
 
-  React.useEffect(() => {
-    // Trigger enter animation
-    const raf = requestAnimationFrame(() => setVisible(true));
-    return () => cancelAnimationFrame(raf);
-  }, []);
+  function handleDismiss() {
+    setClosing(true);
+    setTimeout(() => onDismiss(t.id), 200);
+  }
 
   return (
     <div
@@ -126,15 +136,16 @@ function ToastItem({ toast: t, onDismiss }: { toast: Toast; onDismiss: (id: stri
         display: 'flex',
         alignItems: 'flex-start',
         gap: '12px',
-        padding: '14px 16px',
+        padding: '14px 18px',
         borderRadius: '12px',
-        background: 'rgba(13,16,34,0.96)',
+        background: '#0e1327',
         border: `1px solid ${cfg.border}`,
-        boxShadow: `0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.05)`,
-        backdropFilter: 'blur(20px)',
-        transition: 'all 0.35s cubic-bezier(0.34,1.56,0.64,1)',
-        transform: visible ? 'translateX(0) scale(1)' : 'translateX(120%) scale(0.9)',
-        opacity: visible ? 1 : 0,
+        boxShadow: `0 12px 40px rgba(0,0,0,0.7), 0 0 20px ${cfg.bg}, inset 0 1px 0 rgba(255,255,255,0.08)`,
+        backdropFilter: 'blur(24px)',
+        transition: 'all 0.25s cubic-bezier(0.16,1,0.3,1)',
+        transform: closing ? 'translateX(100%) scale(0.95)' : 'translateX(0) scale(1)',
+        opacity: closing ? 0 : 1,
+        animation: 'toastSlideIn 0.3s cubic-bezier(0.16,1,0.3,1)',
       }}
     >
       {/* Left accent bar */}

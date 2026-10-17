@@ -11,12 +11,15 @@ import { Label } from '@/components/ui/label';
 import { Select } from '@/components/ui/select';
 import { STATUS } from '@/constants/status';
 
+import { useToast } from '@/components/ui/toast';
+
 interface FaqFormProps {
   initialData?: FaqRow;
 }
 
 export function FaqForm({ initialData }: FaqFormProps) {
   const router = useRouter();
+  const { success: showSuccess, error: showError } = useToast();
   const [isPending, setIsPending] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   
@@ -40,11 +43,19 @@ export function FaqForm({ initialData }: FaqFormProps) {
     try {
       if (isEditing) {
         await updateFaqAction(initialData.id, payload);
+        showSuccess('FAQ Updated', 'The FAQ has been saved.');
+        router.refresh();
       } else {
         await createFaqAction(payload);
+        showSuccess('FAQ Created', 'New FAQ added successfully.');
+        router.push('/admin/faqs');
+        router.refresh();
       }
     } catch (err: any) {
-      setError(err.message + (err.stack ? `\nStack: ${err.stack}` : ''));
+      const msg = err.message || 'An error occurred while saving.';
+      setError(msg);
+      showError('Save Failed', msg);
+    } finally {
       setIsPending(false);
     }
   }
@@ -55,9 +66,13 @@ export function FaqForm({ initialData }: FaqFormProps) {
     setIsPending(true);
     try {
       await deleteFaqAction(initialData.id);
+      showSuccess('FAQ Deleted', 'The FAQ has been removed.');
       router.push('/admin/faqs');
+      router.refresh();
     } catch (err: any) {
-      setError(err.message || 'An error occurred while deleting.');
+      const msg = err.message || 'An error occurred while deleting.';
+      setError(msg);
+      showError('Delete Failed', msg);
       setIsPending(false);
     }
   }

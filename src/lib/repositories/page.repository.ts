@@ -10,32 +10,40 @@ import type { PageWithSections } from '@/types/content.types';
 
 /** Fetch a published page with all its published sections, by slug */
 export async function getPublishedPageBySlug(slug: string): Promise<PageWithSections | null> {
-  const supabase = createPublicClient();
+  try {
+    const supabase = createPublicClient();
 
-  const { data: page, error: pageError } = await supabase
-    .from('pages')
-    .select('*')
-    .eq('slug', slug)
-    .eq('status', STATUS.PUBLISHED)
-    .single();
+    const { data: page, error: pageError } = await supabase
+      .from('pages')
+      .select('*')
+      .eq('slug', slug)
+      .eq('status', STATUS.PUBLISHED)
+      .single();
 
-  if (pageError && pageError.code !== 'PGRST116') {
-    throw new Error(`[PageRepository] getPublishedPageBySlug: ${pageError.message}`);
+    if (pageError && pageError.code !== 'PGRST116') {
+      console.warn(`[PageRepository] getPublishedPageBySlug warning: ${pageError.message}`);
+      return null;
+    }
+    if (!page) return null;
+
+    const { data: sections, error: sectionsError } = await supabase
+      .from('page_sections')
+      .select('*')
+      .eq('page_id', page.id)
+      .eq('status', STATUS.PUBLISHED)
+      .order('sort_order', { ascending: true });
+
+    if (sectionsError) {
+      console.warn(`[PageRepository] getPublishedPageBySlug sections warning: ${sectionsError.message}`);
+      return { ...page, sections: [] };
+    }
+
+    return { ...page, sections: sections ?? [] };
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn(`[PageRepository] getPublishedPageBySlug network error: ${msg}`);
+    return null;
   }
-  if (!page) return null;
-
-  const { data: sections, error: sectionsError } = await supabase
-    .from('page_sections')
-    .select('*')
-    .eq('page_id', page.id)
-    .eq('status', STATUS.PUBLISHED)
-    .order('sort_order', { ascending: true });
-
-  if (sectionsError) {
-    throw new Error(`[PageRepository] getPublishedPageBySlug sections: ${sectionsError.message}`);
-  }
-
-  return { ...page, sections: sections ?? [] };
 }
 
 /** Fetch all pages for admin */

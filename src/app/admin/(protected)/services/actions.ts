@@ -19,7 +19,7 @@ export async function createServiceAction(data: ServiceFormData) {
   revalidatePath('/admin/services');
   revalidatePath('/sessions');
   revalidatePath('/');
-  redirect('/admin/services');
+  return { success: true };
 }
 
 export async function updateServiceAction(id: string, data: ServiceFormData) {
@@ -36,7 +36,7 @@ export async function updateServiceAction(id: string, data: ServiceFormData) {
   revalidatePath('/sessions');
   revalidatePath(`/sessions/${parsed.data.slug}`);
   revalidatePath('/');
-  redirect('/admin/services');
+  return { success: true };
 }
 
 export async function deleteServiceAction(id: string) {
@@ -47,4 +47,5 @@ export async function deleteServiceAction(id: string) {
   revalidatePath('/admin/services');
   revalidatePath('/sessions');
   revalidatePath('/');
+  return { success: true };
 }

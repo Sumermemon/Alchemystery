@@ -12,12 +12,15 @@ import { Select } from '@/components/ui/select';
 import { ImageUpload } from '@/components/admin/image-upload';
 import { STATUS } from '@/constants/status';
 
+import { useToast } from '@/components/ui/toast';
+
 interface ServiceFormProps {
   initialData?: ServiceRow;
 }
 
 export function ServiceForm({ initialData }: ServiceFormProps) {
   const router = useRouter();
+  const { success: showSuccess, error: showError } = useToast();
   const [isPending, setIsPending] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   
@@ -50,11 +53,19 @@ export function ServiceForm({ initialData }: ServiceFormProps) {
     try {
       if (isEditing) {
         await updateServiceAction(initialData.id, payload);
+        showSuccess('Service Updated', `"${payload.title}" has been saved.`);
+        router.refresh();
       } else {
         await createServiceAction(payload);
+        showSuccess('Service Created', `"${payload.title}" was created.`);
+        router.push('/admin/services');
+        router.refresh();
       }
     } catch (err: any) {
-      setError(err.message || 'An error occurred while saving.');
+      const msg = err.message || 'An error occurred while saving.';
+      setError(msg);
+      showError('Save Failed', msg);
+    } finally {
       setIsPending(false);
     }
   }
@@ -65,9 +76,13 @@ export function ServiceForm({ initialData }: ServiceFormProps) {
     setIsPending(true);
     try {
       await deleteServiceAction(initialData.id);
+      showSuccess('Service Deleted', `"${initialData.title}" was deleted.`);
       router.push('/admin/services');
+      router.refresh();
     } catch (err: any) {
-      setError(err.message || 'An error occurred while deleting.');
+      const msg = err.message || 'An error occurred while deleting.';
+      setError(msg);
+      showError('Delete Failed', msg);
       setIsPending(false);
     }
   }

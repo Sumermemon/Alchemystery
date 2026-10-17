@@ -23,7 +23,7 @@ export async function createFaqAction(data: FaqFormData) {
   revalidatePath('/faq');
   revalidatePath('/faqs');
   revalidatePath('/');
-  redirect('/admin/faqs');
+  return { success: true };
 }
 
 export async function updateFaqAction(id: string, data: FaqFormData) {
@@ -40,7 +40,7 @@ export async function updateFaqAction(id: string, data: FaqFormData) {
   revalidatePath('/faq');
   revalidatePath('/faqs');
   revalidatePath('/');
-  redirect('/admin/faqs');
+  return { success: true };
 }
 
 export async function deleteFaqAction(id: string) {
@@ -52,4 +52,5 @@ export async function deleteFaqAction(id: string) {
   revalidatePath('/faq');
   revalidatePath('/faqs');
   revalidatePath('/');
+  return { success: true };
 }
