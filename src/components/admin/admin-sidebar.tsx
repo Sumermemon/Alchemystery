@@ -41,7 +41,8 @@ const NAV_ITEMS = [
 
 export default function AdminSidebar({ user, unreadEnquiriesCount = 0 }: AdminSidebarProps) {
   const pathname = usePathname();
-  const { isMobileSidebarOpen, setMobileSidebarOpen } = useAdminTheme();
+  const { theme, isMobileSidebarOpen, setMobileSidebarOpen } = useAdminTheme();
+  const isLight = theme === 'light';
 
   // Close mobile sidebar on route change
   useEffect(() => {
@@ -63,14 +64,16 @@ export default function AdminSidebar({ user, unreadEnquiriesCount = 0 }: AdminSi
           left: 0,
           right: 0,
           height: '1px',
-          background: 'linear-gradient(90deg, transparent, rgba(207,165,106,0.5), transparent)',
+          background: isLight
+            ? 'linear-gradient(90deg, transparent, rgba(160,120,53,0.4), transparent)'
+            : 'linear-gradient(90deg, transparent, rgba(207,165,106,0.5), transparent)',
         }}
       />
 
       {/* Logo / Brand */}
       <div
         className="h-16 flex items-center justify-between px-5"
-        style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+        style={{ borderBottom: isLight ? '1px solid #e2e8f0' : '1px solid rgba(255,255,255,0.06)' }}
       >
         <div className="flex items-center gap-3">
           {/* Emblem */}
@@ -78,17 +81,17 @@ export default function AdminSidebar({ user, unreadEnquiriesCount = 0 }: AdminSi
             className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0"
             style={{
               background: 'linear-gradient(135deg, rgba(207,165,106,0.2), rgba(163,125,66,0.1))',
-              border: '1px solid rgba(207,165,106,0.3)',
-              color: '#CFA56A',
+              border: isLight ? '1px solid rgba(160,120,53,0.3)' : '1px solid rgba(207,165,106,0.3)',
+              color: isLight ? '#a07835' : '#CFA56A',
             }}
           >
             A
           </div>
           <div>
-            <p className="text-sm font-semibold tracking-wider font-serif" style={{ color: '#f1ede2' }}>
+            <p className="text-sm font-semibold tracking-wider font-serif" style={{ color: isLight ? '#0f172a' : '#f1ede2' }}>
               Alchemystery
             </p>
-            <p className="text-[10px] uppercase tracking-[0.2em]" style={{ color: 'rgba(207,165,106,0.6)' }}>
+            <p className="text-[10px] uppercase tracking-[0.2em]" style={{ color: isLight ? '#a07835' : 'rgba(207,165,106,0.6)' }}>
               Admin Panel
             </p>
           </div>
@@ -110,7 +113,7 @@ export default function AdminSidebar({ user, unreadEnquiriesCount = 0 }: AdminSi
       <nav className="flex-1 py-5 px-3 space-y-0.5 overflow-y-auto" aria-label="Admin navigation">
         <p
           className="px-3 mb-2 text-[10px] uppercase tracking-[0.2em]"
-          style={{ color: 'rgba(136,146,164,0.5)' }}
+          style={{ color: isLight ? '#64748b' : 'rgba(136,146,164,0.5)' }}
         >
           Navigation
         </p>
@@ -125,21 +128,21 @@ export default function AdminSidebar({ user, unreadEnquiriesCount = 0 }: AdminSi
               aria-current={active ? 'page' : undefined}
               className="group flex items-center justify-between px-3 py-2.5 rounded-lg text-sm transition-all duration-200 relative overflow-hidden"
               style={{
-                color: active ? '#CFA56A' : '#8892a4',
+                color: active ? (isLight ? '#a07835' : '#CFA56A') : (isLight ? '#475569' : '#8892a4'),
                 background: active
-                  ? 'linear-gradient(90deg, rgba(207,165,106,0.12), rgba(207,165,106,0.04))'
+                  ? (isLight ? 'rgba(207,165,106,0.15)' : 'linear-gradient(90deg, rgba(207,165,106,0.12), rgba(207,165,106,0.04))')
                   : 'transparent',
-                fontWeight: active ? 500 : 400,
+                fontWeight: active ? 600 : 400,
               }}
               onMouseEnter={(e) => {
                 if (!active) {
-                  e.currentTarget.style.color = '#c4cdd9';
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
+                  e.currentTarget.style.color = isLight ? '#0f172a' : '#c4cdd9';
+                  e.currentTarget.style.background = isLight ? '#f1f5f9' : 'rgba(255,255,255,0.04)';
                 }
               }}
               onMouseLeave={(e) => {
                 if (!active) {
-                  e.currentTarget.style.color = '#8892a4';
+                  e.currentTarget.style.color = isLight ? '#475569' : '#8892a4';
                   e.currentTarget.style.background = 'transparent';
                 }
               }}
@@ -185,11 +188,14 @@ export default function AdminSidebar({ user, unreadEnquiriesCount = 0 }: AdminSi
       {/* User Footer */}
       <div
         className="p-4"
-        style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+        style={{ borderTop: isLight ? '1px solid #e2e8f0' : '1px solid rgba(255,255,255,0.06)' }}
       >
         <div
           className="flex items-center gap-3 p-3 rounded-xl"
-          style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+          style={{
+            background: isLight ? '#f8fafc' : 'rgba(255,255,255,0.03)',
+            border: isLight ? '1px solid #e2e8f0' : '1px solid rgba(255,255,255,0.06)',
+          }}
         >
           {/* Avatar */}
           <div
@@ -203,10 +209,10 @@ export default function AdminSidebar({ user, unreadEnquiriesCount = 0 }: AdminSi
           </div>
 
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-medium truncate" style={{ color: '#f1ede2' }}>
+            <p className="text-xs font-medium truncate" style={{ color: isLight ? '#0f172a' : '#f1ede2' }}>
               {user.displayName ?? user.email ?? 'Admin'}
             </p>
-            <p className="text-[10px] uppercase tracking-widest mt-0.5" style={{ color: 'rgba(207,165,106,0.7)' }}>
+            <p className="text-[10px] uppercase tracking-widest mt-0.5" style={{ color: isLight ? '#a07835' : 'rgba(207,165,106,0.7)' }}>
               {user.role.replace('_', ' ')}
             </p>
           </div>
@@ -216,13 +222,13 @@ export default function AdminSidebar({ user, unreadEnquiriesCount = 0 }: AdminSi
               type="submit"
               className="p-1.5 rounded-lg transition-all duration-200 cursor-pointer"
               title="Sign out"
-              style={{ color: '#4a5568', background: 'transparent' }}
+              style={{ color: isLight ? '#64748b' : '#4a5568', background: 'transparent' }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.color = '#f87171';
+                e.currentTarget.style.color = '#ef4444';
                 e.currentTarget.style.background = 'rgba(239,68,68,0.1)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.color = '#4a5568';
+                e.currentTarget.style.color = isLight ? '#64748b' : '#4a5568';
                 e.currentTarget.style.background = 'transparent';
               }}
             >
@@ -240,8 +246,8 @@ export default function AdminSidebar({ user, unreadEnquiriesCount = 0 }: AdminSi
       <aside
         className="hidden lg:flex w-64 flex-shrink-0 flex-col"
         style={{
-          background: 'linear-gradient(180deg, #0d1127 0%, #0a0d1a 100%)',
-          borderRight: '1px solid rgba(255,255,255,0.06)',
+          background: isLight ? '#ffffff' : 'linear-gradient(180deg, #0d1127 0%, #0a0d1a 100%)',
+          borderRight: isLight ? '1px solid #e2e8f0' : '1px solid rgba(255,255,255,0.06)',
           minHeight: '100vh',
           position: 'relative',
         }}
@@ -261,8 +267,8 @@ export default function AdminSidebar({ user, unreadEnquiriesCount = 0 }: AdminSi
           <aside
             className="fixed inset-y-0 left-0 w-72 flex flex-col z-50 shadow-2xl animate-in slide-in-from-left duration-200"
             style={{
-              background: 'linear-gradient(180deg, #0d1127 0%, #0a0d1a 100%)',
-              borderRight: '1px solid rgba(255,255,255,0.1)',
+              background: isLight ? '#ffffff' : 'linear-gradient(180deg, #0d1127 0%, #0a0d1a 100%)',
+              borderRight: isLight ? '1px solid #e2e8f0' : '1px solid rgba(255,255,255,0.1)',
             }}
           >
             {renderContent(true)}

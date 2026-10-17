@@ -58,14 +58,14 @@ export function AdminThemeProvider({ children }: { children: React.ReactNode }) 
 
     if (theme === 'light') {
       // Admin layout vars
-      root.style.setProperty('--admin-bg', '#f4f6fa');
+      root.style.setProperty('--admin-bg', '#f8fafc');
       root.style.setProperty('--admin-surface', '#ffffff');
-      root.style.setProperty('--admin-surface-2', '#f8fafc');
-      root.style.setProperty('--admin-sidebar-bg', '#0d1127');
-      root.style.setProperty('--admin-border', 'rgba(0, 0, 0, 0.08)');
+      root.style.setProperty('--admin-surface-2', '#f1f5f9');
+      root.style.setProperty('--admin-sidebar-bg', '#ffffff');
+      root.style.setProperty('--admin-border', '#e2e8f0');
       root.style.setProperty('--admin-text', '#0f172a');
       root.style.setProperty('--admin-muted', '#64748b');
-      root.style.setProperty('--admin-header-bg', 'rgba(255, 255, 255, 0.94)');
+      root.style.setProperty('--admin-header-bg', 'rgba(255, 255, 255, 0.95)');
 
       // Inputs & forms
       root.style.setProperty('--admin-input-bg', '#ffffff');
@@ -73,8 +73,8 @@ export function AdminThemeProvider({ children }: { children: React.ReactNode }) 
       root.style.setProperty('--admin-input-text', '#0f172a');
       root.style.setProperty('--admin-input-placeholder', '#94a3b8');
       root.style.setProperty('--admin-card-bg', '#ffffff');
-      root.style.setProperty('--admin-card-border', 'rgba(0, 0, 0, 0.08)');
-      root.style.setProperty('--admin-card-shadow', '0 1px 3px rgba(0,0,0,0.05), 0 10px 25px -5px rgba(0,0,0,0.03)');
+      root.style.setProperty('--admin-card-border', '#e2e8f0');
+      root.style.setProperty('--admin-card-shadow', '0 1px 3px rgba(15,23,42,0.06), 0 8px 16px -4px rgba(15,23,42,0.04)');
       root.style.setProperty('--admin-section-border', '#e2e8f0');
       root.style.setProperty('--admin-upload-bg', '#f8fafc');
       root.style.setProperty('--admin-upload-bg-hover', '#f1f5f9');

@@ -92,7 +92,7 @@ export default function EnquiryDetailClient({ enquiry }: EnquiryDetailClientProp
 
         {/* Status Pills Selector */}
         <div className="flex items-center gap-2">
-          <span className="text-xs text-[var(--color-muted)]">Status:</span>
+          <span className="text-xs text-[var(--admin-muted)]">Status:</span>
           {(['new', 'read', 'replied', 'archived'] as EnquiryStatus[]).map((st) => (
             <button
               key={st}
@@ -101,13 +101,13 @@ export default function EnquiryDetailClient({ enquiry }: EnquiryDetailClientProp
               className={`px-3 py-1 rounded-full text-xs font-medium capitalize transition-all ${
                 currentStatus === st
                   ? st === 'new'
-                    ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm'
+                    ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/40 shadow-sm'
                     : st === 'replied'
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm'
+                    ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40 shadow-sm'
                     : st === 'read'
-                    ? 'bg-blue-500/20 text-blue-300 border border-blue-500/40 shadow-sm'
-                    : 'bg-zinc-500/20 text-zinc-300 border border-zinc-500/40 shadow-sm'
-                  : 'text-[var(--color-muted)] hover:text-[var(--color-ivory)] hover:bg-white/5 border border-transparent'
+                    ? 'bg-blue-500/15 text-blue-700 dark:text-blue-300 border border-blue-500/40 shadow-sm'
+                    : 'bg-slate-500/15 text-slate-700 dark:text-zinc-300 border border-slate-500/40 shadow-sm'
+                  : 'text-[var(--admin-muted)] hover:text-[var(--admin-text)] hover:bg-[var(--admin-surface-2)] border border-transparent'
               }`}
             >
               {st}
@@ -118,11 +118,11 @@ export default function EnquiryDetailClient({ enquiry }: EnquiryDetailClientProp
 
       {/* Main Info Card */}
       <Card>
-        <CardHeader className="border-b border-white/5 pb-4">
+        <CardHeader className="border-b pb-4" style={{ borderColor: 'var(--admin-border)' }}>
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <h1 className="text-xl text-[var(--color-ivory)] font-medium" style={{ fontFamily: 'var(--font-serif)' }}>
+                <h1 className="text-xl text-[var(--admin-text)] font-semibold font-sans">
                   {enquiry.name}
                 </h1>
                 {enquiry.session_type && (
@@ -138,7 +138,7 @@ export default function EnquiryDetailClient({ enquiry }: EnquiryDetailClientProp
                   </span>
                 )}
               </div>
-              <div className="flex items-center gap-3 text-xs text-[var(--color-muted)]">
+              <div className="flex items-center gap-3 text-xs text-[var(--admin-muted)]">
                 <span className="flex items-center gap-1">
                   <Calendar className="w-3 h-3" />
                   {formattedDate}
@@ -157,10 +157,10 @@ export default function EnquiryDetailClient({ enquiry }: EnquiryDetailClientProp
                     handleStatusChange('replied');
                   }
                 }}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium text-black transition-all"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold text-[#0B0F1E] transition-all cursor-pointer"
                 style={{
                   backgroundColor: 'var(--color-gold)',
-                  boxShadow: '0 0 15px rgba(201,168,76,0.3)',
+                  boxShadow: '0 2px 10px rgba(201,168,76,0.25)',
                 }}
               >
                 <Mail className="w-3.5 h-3.5" />
@@ -171,7 +171,7 @@ export default function EnquiryDetailClient({ enquiry }: EnquiryDetailClientProp
               <button
                 onClick={handleDelete}
                 disabled={isPending}
-                className="p-2 rounded-lg border border-red-500/20 text-red-400/80 hover:text-red-300 hover:bg-red-950/30 transition-colors"
+                className="p-2 rounded-lg border border-red-500/20 text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 hover:bg-red-500/10 transition-colors"
                 title="Delete Enquiry"
               >
                 <Trash2 className="w-4 h-4" />
@@ -182,10 +182,16 @@ export default function EnquiryDetailClient({ enquiry }: EnquiryDetailClientProp
 
         <CardContent className="space-y-6 pt-6">
           {/* Client Details Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+          <div 
+            className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-xl border"
+            style={{
+              backgroundColor: 'var(--admin-surface-2)',
+              borderColor: 'var(--admin-border)',
+            }}
+          >
             <div className="space-y-1">
-              <span className="text-[11px] text-[var(--color-muted)] uppercase tracking-wider">Email Address</span>
-              <p className="text-sm font-mono text-[var(--color-ivory)]">
+              <span className="text-[11px] text-[var(--admin-muted)] uppercase tracking-wider font-medium">Email Address</span>
+              <p className="text-sm font-mono text-[var(--admin-text)]">
                 <a href={mailtoUrl} className="hover:text-[var(--color-gold)] hover:underline">
                   {enquiry.email}
                 </a>
@@ -193,8 +199,8 @@ export default function EnquiryDetailClient({ enquiry }: EnquiryDetailClientProp
             </div>
 
             <div className="space-y-1">
-              <span className="text-[11px] text-[var(--color-muted)] uppercase tracking-wider">Requested Session</span>
-              <p className="text-sm text-[var(--color-ivory)]">
+              <span className="text-[11px] text-[var(--admin-muted)] uppercase tracking-wider font-medium">Requested Session</span>
+              <p className="text-sm text-[var(--admin-text)]">
                 {enquiry.session_type || 'General Consultation / Inquiry'}
               </p>
             </div>
@@ -202,14 +208,14 @@ export default function EnquiryDetailClient({ enquiry }: EnquiryDetailClientProp
 
           {/* Enquiry Message */}
           <div className="space-y-2">
-            <span className="text-xs text-[var(--color-muted)] uppercase tracking-wider font-semibold">
+            <span className="text-xs text-[var(--admin-muted)] uppercase tracking-wider font-semibold">
               Message from Client
             </span>
             <div
-              className="p-6 rounded-xl border leading-relaxed text-sm text-[var(--color-ivory)] whitespace-pre-wrap font-sans"
+              className="p-6 rounded-xl border leading-relaxed text-sm text-[var(--admin-text)] whitespace-pre-wrap font-sans"
               style={{
-                backgroundColor: 'rgba(11, 15, 30, 0.7)',
-                borderColor: 'rgba(201, 168, 76, 0.15)',
+                backgroundColor: 'var(--admin-surface-2)',
+                borderColor: 'var(--admin-border)',
               }}
             >
               {enquiry.message}

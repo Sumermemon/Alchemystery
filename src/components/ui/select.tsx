@@ -18,7 +18,6 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             background: 'var(--admin-input-bg, #0d1224)',
             borderColor: 'var(--admin-input-border, rgba(255,255,255,0.12))',
             color: 'var(--admin-input-text, var(--color-ivory))',
-            colorScheme: 'dark',
             ...style,
           }}
           ref={ref}

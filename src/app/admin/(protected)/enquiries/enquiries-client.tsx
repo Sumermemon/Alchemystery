@@ -168,12 +168,19 @@ END $$;`;
       {/* Controls Bar: Filters + Search */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         {/* Status Filter Tabs */}
-        <div className="flex items-center gap-1.5 p-1 rounded-lg border bg-[#080b15]" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+        <div 
+          className="flex items-center gap-1.5 p-1 rounded-lg border transition-colors"
+          style={{ 
+            backgroundColor: 'var(--admin-card-bg)', 
+            borderColor: 'var(--admin-border)',
+            boxShadow: 'var(--admin-card-shadow)'
+          }}
+        >
           {[
             { key: 'all', label: 'All', count: counts.all },
-            { key: 'new', label: 'New', count: counts.new, badgeColor: 'bg-amber-500/20 text-amber-300' },
+            { key: 'new', label: 'New', count: counts.new, badgeColor: 'bg-amber-500/15 text-amber-700 dark:text-amber-300' },
             { key: 'read', label: 'Read', count: counts.read },
-            { key: 'replied', label: 'Replied', count: counts.replied, badgeColor: 'bg-emerald-500/20 text-emerald-300' },
+            { key: 'replied', label: 'Replied', count: counts.replied, badgeColor: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300' },
             { key: 'archived', label: 'Archived', count: counts.archived },
           ].map((tab) => (
             <button
@@ -181,13 +188,13 @@ END $$;`;
               onClick={() => setFilter(tab.key)}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
                 filter === tab.key
-                  ? 'bg-[rgba(201,168,76,0.15)] text-[var(--color-gold)] border border-[rgba(201,168,76,0.3)] shadow-sm'
-                  : 'text-[var(--color-muted)] hover:text-[var(--color-ivory)] hover:bg-white/5 border border-transparent'
+                  ? 'bg-[var(--color-gold)]/15 text-[var(--color-gold)] border border-[var(--color-gold)]/35 shadow-sm font-semibold'
+                  : 'text-[var(--admin-muted)] hover:text-[var(--admin-text)] hover:bg-[var(--admin-surface-2)] border border-transparent'
               }`}
             >
               <span>{tab.label}</span>
               {tab.count > 0 && (
-                <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-semibold ${tab.badgeColor || 'bg-white/10 text-[var(--color-muted)]'}`}>
+                <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-semibold ${tab.badgeColor || 'bg-black/5 dark:bg-white/10 text-[var(--admin-muted)]'}`}>
                   {tab.count}
                 </span>
               )}
@@ -197,14 +204,18 @@ END $$;`;
 
         {/* Search Input */}
         <div className="relative w-full sm:w-64">
-          <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)]" />
+          <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--admin-muted)]" />
           <input
             type="text"
             placeholder="Search enquiries..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 rounded-lg text-xs bg-[#080b15] border text-[var(--color-ivory)] placeholder:text-[var(--color-muted)] focus:outline-none focus:border-[var(--color-gold)] transition-colors"
-            style={{ borderColor: 'rgba(255,255,255,0.08)' }}
+            className="w-full pl-9 pr-3 py-1.5 rounded-lg text-xs border text-[var(--admin-text)] placeholder:text-[var(--admin-muted)] focus:outline-none focus:border-[var(--color-gold)] transition-colors"
+            style={{ 
+              backgroundColor: 'var(--admin-card-bg)', 
+              borderColor: 'var(--admin-border)',
+              boxShadow: 'var(--admin-card-shadow)'
+            }}
           />
         </div>
       </div>
@@ -295,14 +306,14 @@ END $$;`;
                       {/* Status */}
                       <TableCell>
                         <span
-                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium capitalize ${
+                          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium capitalize ${
                             enquiry.status === 'new'
-                              ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30'
+                              ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30'
                               : enquiry.status === 'replied'
-                              ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30'
+                              ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30'
                               : enquiry.status === 'read'
-                              ? 'bg-blue-500/15 text-blue-300 border border-blue-500/30'
-                              : 'bg-zinc-500/15 text-zinc-400 border border-zinc-500/30'
+                              ? 'bg-blue-500/15 text-blue-700 dark:text-blue-300 border border-blue-500/30'
+                              : 'bg-slate-500/15 text-slate-700 dark:text-zinc-400 border border-slate-500/30'
                           }`}
                         >
                           {enquiry.status === 'new' && <Clock className="w-2.5 h-2.5" />}
@@ -313,7 +324,7 @@ END $$;`;
                       </TableCell>
 
                       {/* Date */}
-                      <TableCell className="text-xs text-[var(--color-muted)] whitespace-nowrap">
+                      <TableCell className="text-xs text-[var(--admin-muted)] whitespace-nowrap">
                         {dateStr}
                       </TableCell>
 
@@ -322,7 +333,7 @@ END $$;`;
                         <div className="flex items-center justify-end gap-1.5">
                           <Link
                             href={`/admin/enquiries/${enquiry.id}`}
-                            className="p-1.5 rounded hover:bg-white/10 text-[var(--color-muted)] hover:text-[var(--color-ivory)] transition-colors"
+                            className="p-1.5 rounded hover:bg-[var(--admin-surface-2)] text-[var(--admin-muted)] hover:text-[var(--admin-text)] transition-colors"
                             title="View Full Details"
                           >
                             <Eye className="w-3.5 h-3.5" />
@@ -332,7 +343,7 @@ END $$;`;
                             <button
                               onClick={() => handleStatusChange(enquiry.id, 'replied')}
                               disabled={isPending}
-                              className="p-1.5 rounded hover:bg-emerald-950/40 text-[var(--color-muted)] hover:text-emerald-400 transition-colors"
+                              className="p-1.5 rounded hover:bg-emerald-500/15 text-[var(--admin-muted)] hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
                               title="Mark as Replied"
                             >
                               <CheckCircle2 className="w-3.5 h-3.5" />
@@ -343,7 +354,7 @@ END $$;`;
                             <button
                               onClick={() => handleStatusChange(enquiry.id, 'archived')}
                               disabled={isPending}
-                              className="p-1.5 rounded hover:bg-zinc-800/40 text-[var(--color-muted)] hover:text-zinc-300 transition-colors"
+                              className="p-1.5 rounded hover:bg-[var(--admin-surface-2)] text-[var(--admin-muted)] hover:text-[var(--admin-text)] transition-colors"
                               title="Archive"
                             >
                               <Archive className="w-3.5 h-3.5" />
@@ -353,7 +364,7 @@ END $$;`;
                           <button
                             onClick={() => handleDelete(enquiry.id)}
                             disabled={isPending}
-                            className="p-1.5 rounded hover:bg-red-950/40 text-[var(--color-muted)] hover:text-red-400 transition-colors"
+                            className="p-1.5 rounded hover:bg-red-500/10 text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 transition-colors"
                             title="Delete"
                           >
                             <Trash2 className="w-3.5 h-3.5" />

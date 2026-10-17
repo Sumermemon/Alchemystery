@@ -141,29 +141,43 @@ a {
   border-radius: 2px;
 }
 
-/* ── Form Select & Options Dark Theme ──────────────────────────── */
-select,
-select option {
+/* ── Form Select & Options Theme Support ───────────────────────── */
+[data-admin-theme='dark'] select,
+[data-admin-theme='dark'] select option,
+:not([data-admin-theme='light']) select option {
   color-scheme: dark;
-}
-
-[data-admin-theme] select,
-.admin-shell select,
-select option {
-  background-color: #0e1327 !important;
-  color: #f0ede6 !important;
-}
-
-select option {
   background-color: #0e1327 !important;
   color: #f0ede6 !important;
   padding: 10px 14px;
 }
 
-select option:checked,
-select option:hover {
+[data-admin-theme='dark'] select option:checked,
+[data-admin-theme='dark'] select option:hover,
+:not([data-admin-theme='light']) select option:checked,
+:not([data-admin-theme='light']) select option:hover {
   background-color: #1e284a !important;
   color: #c9a84c !important;
+}
+
+/* Light mode dropdowns */
+[data-admin-theme='light'] select {
+  color-scheme: light !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-admin-theme='light'] select option {
+  color-scheme: light !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  padding: 10px 14px;
+}
+
+[data-admin-theme='light'] select option:checked,
+[data-admin-theme='light'] select option:hover {
+  background-color: #f1f5f9 !important;
+  color: #a07835 !important;
 }
 
 @keyframes toastSlideIn {

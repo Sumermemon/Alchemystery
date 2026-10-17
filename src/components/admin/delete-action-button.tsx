@@ -75,28 +75,28 @@ export function DeleteActionButton({
           <div 
             className="w-full max-w-md rounded-2xl border p-6 shadow-2xl relative"
             style={{
-              backgroundColor: '#0c1022',
-              borderColor: 'rgba(239, 68, 68, 0.3)',
-              boxShadow: '0 20px 50px rgba(0,0,0,0.8), 0 0 25px rgba(239,68,68,0.15)',
+              backgroundColor: 'var(--admin-card-bg, #0c1022)',
+              borderColor: 'var(--admin-card-border, rgba(239, 68, 68, 0.3))',
+              boxShadow: 'var(--admin-card-shadow, 0 20px 50px rgba(0,0,0,0.8))',
             }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-full bg-red-500/15 border border-red-500/30 flex items-center justify-center shrink-0 text-red-400">
+              <div className="w-10 h-10 rounded-full bg-red-500/15 border border-red-500/30 flex items-center justify-center shrink-0 text-red-500 dark:text-red-400">
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div className="flex-1">
-                <h3 className="text-base font-semibold text-[var(--color-ivory)]">
+                <h3 className="text-base font-semibold text-[var(--admin-text)]">
                   Delete {itemType}?
                 </h3>
                 <p className="text-sm text-[var(--admin-muted)] mt-1">
-                  Are you sure you want to permanently delete <span className="text-[var(--color-ivory)] font-medium">"{itemName}"</span>? This action cannot be reversed.
+                  Are you sure you want to permanently delete <span className="text-[var(--admin-text)] font-semibold">"{itemName}"</span>? This action cannot be reversed.
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => !isDeleting && setIsOpen(false)}
-                className="text-[var(--admin-muted)] hover:text-white transition-colors"
+                className="text-[var(--admin-muted)] hover:text-[var(--admin-text)] transition-colors"
                 disabled={isDeleting}
               >
                 <X className="w-4 h-4" />
@@ -108,7 +108,7 @@ export function DeleteActionButton({
                 type="button"
                 onClick={() => setIsOpen(false)}
                 disabled={isDeleting}
-                className="px-4 py-2 rounded-lg text-xs font-medium text-[var(--admin-muted)] hover:text-white hover:bg-white/5 transition-colors"
+                className="px-4 py-2 rounded-lg text-xs font-medium text-[var(--admin-muted)] hover:text-[var(--admin-text)] hover:bg-[var(--admin-surface-2)] transition-colors"
               >
                 Cancel
               </button>
